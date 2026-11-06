@@ -72,6 +72,7 @@ wtbun の機能の詳細。方針と理由は [design.md](design.md)。
   - システムメニュー（Alt＋Space・タスクバーのボタンの Shift＋右クリック）の「移動」でキーボードから動かすときも同じ。Esc で取り消すと、全部が元の位置に戻る
   - プロジェクトがないときは、最後の位置にとどまる（最初は画面の中央）
 - 右端の「≡」から「wtbun を終了」（「終了と復元」を参照）
+- 「≡」の「環境設定…」で、表示する言語を選ぶダイアログ（`SettingsWindow`。題名は「環境設定 - wtbun」）を、タブ列の真下に出す（「表示する言語」を参照）
 - 「≡」の「wtbun について…」で、アプリの情報のダイアログ（`AboutWindow`。題名は「wtbun について」）を、タブ列の真下に出す。ダイアログを出すメニューなので、末尾に「…」を付ける
   - アプリのアイコン、アプリ名（[Title] Text と ShortText）、バージョン（[Version] Text）、著作権表示（[Copyright] Text と Name）、リリースのページの URL（[URL] Release。新しいバージョンを探せるように。クリックすると既定のブラウザーで開く）
   - 「NOTICE」「LICENSE」のタブで、リポジトリ直下の `NOTICE`・`LICENSE` の本文を出す。ネットにつながっていなくても読めるよう、ビルドのときに exe に入れる（`EmbeddedResource`）。等幅で折り返さない。タブを切り替えてもウィンドウの高さは変えない
@@ -254,10 +255,35 @@ command = 'npm run dev'
 - `--data-dir フォルダー`（または `--data-dir=フォルダー`）：状態（`state.json`）・設定（`settings.json`）・フォルダーの履歴（`history.json`）の保存先を変える。指定がなければ `%APPDATA%\wtbun\`。相対パスは起動したときのフォルダが基準
   - 試験で、利用者の状態（開いていたプロジェクト）を使わずに wtbun を動かすためのもの。環境変数 APPDATA を変えても保存先は変わらない（既知のフォルダの API で決まる）
   - `--data-dir` の後ろにフォルダがなければ、「保存先のフォルダーが指定されていません。--data-dir の後ろにフォルダーを指定してください。」と出して終わる（終了コード 1）
-  - 知らない引数は無視する
+- `--lang 言語`（または `--lang=言語`）：表示する言語を、この起動の間だけ変える。`settings.json` の記録は変えない（「表示する言語」を参照）
+  - 言語は `en-US`・`ja-JP`（大文字・小文字は区別しない。`en`・`ja` だけでもよい）
+  - 選べない言語なら、「言語の指定が正しくありません。--lang の後ろに次のどれかを指定してください：en-US, ja-JP」と出して終わる（終了コード 1）
+- 引数が正しくなくて終わるときは、初めての起動でも `settings.json` を作らない（メッセージの言語は Windows の表示言語から決める）
+- 知らない引数は無視する
+
+## 表示する言語
+- 英語（`en-US`）と日本語（`ja-JP`）。画面の文言・メッセージ・最初に作る `.wtbun.toml` のコメントが変わる
+- 初めて起動したとき（`settings.json` に言語がないとき）に、Windows の表示言語（`CultureInfo.CurrentUICulture`）から決めて `settings.json` の `language` に記録する。以後は記録した言語で動く
+  - 表示言語が日本語なら `ja-JP`、そのほか（選べる言語にないもの）は `en-US`（`Loc.Detect`）
+- 「≡」の「環境設定…」のダイアログ（`SettingsWindow`）で変えられる
+  - 言語の一覧は、その言語自身の名前で出す（「English」「日本語」）
+  - 「OK」で記録し、その場で切り替える（開き直さなくてよい）。今の言語と同じなら何もしない
+  - `--lang` で上書きしているときは、今の（上書きした）言語を選んだ状態で開く。別の言語を選ぶと記録して切り替える
+- `--lang` で、記録を変えずにこの起動の間だけ上書きできる
+- 変わらないもの
+  - メッセージボックスのボタン（「はい」「OK」など）と、フォルダー・ファイルを選ぶダイアログ：Windows の表示言語のまま
+  - 日付や数の書き方（`CultureInfo.CurrentCulture`）：Windows の地域の設定のまま。サイズ（%）の入力もこれで読む
+  - すでにある `.wtbun.toml` のコメント：作ったときの言語のまま（項目名と値は言語によらない）
+  - Windows Terminal の閉じる確認をオフにする案内は、Windows Terminal の画面の項目名を書いているので、wtbun の言語と Windows Terminal の表示言語が違うと名前が合わない
+- 仕組み
+  - 文言は `src/Wtbun/Localization/Strings.resx`（英語。既定）と `Strings.ja.resx`（日本語）。キーは `画面_内容` の形（例：`Config_Save`）。`{0}` などは実行時に入る値。英語の resx の comment は翻訳する人への説明
+  - 日本語はサテライト アセンブリ `ja\Wtbun.resources.dll` に入る（配布物にも入れる）。英語は exe の中（`NeutralLanguage` が `en-US`）
+  - XAML は `{l:Tr キー}`（`TrExtension`）、コードは `Loc.Get`・`Loc.Format` で使う。`Loc.Apply` で言語を変えると、XAML の文言は Binding で変わる。略名を入れるメニュー（「wtbun について…」「wtbun を終了」）は `MainWindow.ApplyMenuTexts` で作り直す
+  - キーが見つからないときは `[キー]` と出す
 
 ## 設定
 - 「≡」のメニューで切り替える。`%APPDATA%\wtbun\settings.json` に保存する
+- 「環境設定…」：表示する言語（「表示する言語」を参照）
 - 「ターミナルをタスクバーに表示」：管理下の Windows Terminal のウィンドウをタスクバーに出すか。初期値は出す
   - オフにすると、管理下のウィンドウのボタンをタスクバーから外す（ITaskbarList）。後から開いたウィンドウ・引き取ったウィンドウも外す。Alt＋Tab には出る
   - エクスプローラーが再起動したときは、外し直す
@@ -281,7 +307,7 @@ command = 'npm run dev'
 
 ## リリース用パッケージ（release.cmd）
 - リポジトリ直下の `release.cmd` で作る。できるもの（どちらも `release/` の下。git には入れない）
-  - `release/（ShortText）_（Version）/`：リリース版の実行ファイル一式と、README.md・LICENSE・NOTICE
+  - `release/（ShortText）_（Version）/`：リリース版の実行ファイル一式（日本語の文言の `ja\Wtbun.resources.dll` を含む）と、README.md・README.en.md・LICENSE・NOTICE
   - `release/（ShortText）_（Version）.zip`：そのフォルダーごと固めたもの（展開するとフォルダーが 1 つできる）
 - 名前の（ShortText）は `Profile.ini` の [Title] ShortText、（Version）は [Version] Text。ビルドと同じ読み方にするため、`dotnet msbuild -getProperty` で `Directory.Build.props` のプロパティ（`ProfileShortTitle`・`Version`）を読む
 - 実行ファイルは `dotnet publish -c Release -p:DebugType=none` で作る（.pdb は入れない）。.NET 10 のランタイムを使う形（self-contained ではない）
@@ -309,5 +335,5 @@ command = 'npm run dev'
 | [URL] Notice | 「wtbun について」の「最新の内容を Web で表示」（`AppProfile.NoticeUrl`。なくてもよい） |
 | [AppId] | 今は使っていない |
 
-- このドキュメントで「wtbun」「`.wtbun.toml`」「`%APPDATA%\wtbun\`」と書いているのは、[Title] ShortText が `wtbun` のときの名前。README.md も同じ
-- README.md の題名・著作権表記・連絡先と、NOTICE の先頭（アプリ名・略名・著作権表示・URL）には、[Title] Text・ShortText・[Copyright] Text・[URL] Project の値を書いている（どちらもビルドしないファイルで読み込めないため。値が変わったら両方とも直す）
+- このドキュメントで「wtbun」「`.wtbun.toml`」「`%APPDATA%\wtbun\`」と書いているのは、[Title] ShortText が `wtbun` のときの名前。README.md・README.en.md も同じ
+- README.md・README.en.md の題名・著作権表記・連絡先と、NOTICE の先頭（アプリ名・略名・著作権表示・URL）には、[Title] Text・ShortText・[Copyright] Text・[URL] Project の値を書いている（どれもビルドしないファイルで読み込めないため。値が変わったらすべて直す）

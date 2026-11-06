@@ -1,4 +1,5 @@
 using System.Windows;
+using Wtbun.Localization;
 
 namespace Wtbun;
 
@@ -22,7 +23,7 @@ public partial class AlreadyOpenWindow : Window
     {
         InitializeComponent();
         Title = AppProfile.ShortTitle;
-        MessageText.Text = $"「{projectName}」はすでに開いています。";
+        MessageText.Text = Loc.Format("AlreadyOpen_Message", projectName);
         if (terminalHint is not null)
         {
             TerminalHint.Text = terminalHint;

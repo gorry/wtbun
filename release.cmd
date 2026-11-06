@@ -1,6 +1,6 @@
 @echo off
 rem Builds the release package from Profile.ini ([Title] ShortText and [Version] Text):
-rem   release\<ShortText>_<Version>\      the release binaries, README.md, LICENSE and NOTICE
+rem   release\<ShortText>_<Version>\      the release binaries, README.md, README.en.md, LICENSE and NOTICE
 rem   release\<ShortText>_<Version>.zip   that folder, zipped
 rem Exit code 1 on failure.
 setlocal
@@ -34,7 +34,7 @@ if not exist "%dir%\wtbunhook.dll" (
   goto fail
 )
 
-for %%f in (README.md LICENSE NOTICE) do (
+for %%f in (README.md README.en.md LICENSE NOTICE) do (
   copy /y "%root%%%f" "%dir%\" >nul || goto fail
 )
 

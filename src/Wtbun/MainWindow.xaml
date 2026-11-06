@@ -1,18 +1,19 @@
 ﻿<Window x:Class="Wtbun.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:l="clr-namespace:Wtbun.Localization"
         Height="32" Width="640"
         WindowStyle="None" ResizeMode="CanMinimize"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <ContextMenu x:Key="TabMenu" x:Shared="False">
-            <MenuItem Header="左へ移動" Click="MoveLeft_Click" />
-            <MenuItem Header="右へ移動" Click="MoveRight_Click" />
+            <MenuItem Header="{l:Tr Main_MoveLeft}" Click="MoveLeft_Click" />
+            <MenuItem Header="{l:Tr Main_MoveRight}" Click="MoveRight_Click" />
             <Separator />
-            <MenuItem Header="プロジェクトの構成を編集…" Click="EditConfig_Click" />
-            <MenuItem Header="プロジェクトを開き直す" Click="ReopenProject_Click" />
+            <MenuItem Header="{l:Tr Main_EditConfig}" Click="EditConfig_Click" />
+            <MenuItem Header="{l:Tr Main_Reopen}" Click="ReopenProject_Click" />
             <Separator />
-            <MenuItem Header="閉じる" Click="CloseProject_Click" />
+            <MenuItem Header="{l:Tr Common_Close}" Click="CloseProject_Click" />
         </ContextMenu>
 
         <Style x:Key="StripButtonStyle" TargetType="Button">
@@ -98,7 +99,7 @@
                                    RenderOptions.BitmapScalingMode="HighQuality" />
                             <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
                             <Button Content="×"
-                                    ToolTip="閉じる"
+                                    ToolTip="{l:Tr Common_Close}"
                                     Margin="8,0,0,0"
                                     Padding="4,0"
                                     Background="Transparent"
@@ -110,24 +111,24 @@
                 </ListBox.ItemTemplate>
             </ListBox>
             <Button DockPanel.Dock="Left"
-                    ToolTip="プロジェクトを開く"
-                    AutomationProperties.Name="プロジェクトを開く"
+                    ToolTip="{l:Tr Main_OpenProject}"
+                    AutomationProperties.Name="{l:Tr Main_OpenProject}"
                     Style="{StaticResource StripButtonStyle}"
                     Click="Menu_Click">
                 <!-- 追加（＋）のアイコン -->
                 <TextBlock Text="&#xE710;" Style="{StaticResource StripIconStyle}" />
                 <Button.ContextMenu>
                     <ContextMenu Opened="OpenMenu_Opened">
-                        <MenuItem Header="フォルダーを選択…" Click="OpenProject_Click" />
-                        <MenuItem x:Name="HistoryMenu" Header="履歴" />
+                        <MenuItem Header="{l:Tr Main_SelectFolder}" Click="OpenProject_Click" />
+                        <MenuItem x:Name="HistoryMenu" Header="{l:Tr Main_History}" />
                         <Separator />
-                        <MenuItem x:Name="ClearHistoryMenu" Header="履歴の消去…" Click="ClearHistory_Click" />
+                        <MenuItem x:Name="ClearHistoryMenu" Header="{l:Tr Main_ClearHistory}" Click="ClearHistory_Click" />
                     </ContextMenu>
                 </Button.ContextMenu>
             </Button>
             <Button DockPanel.Dock="Right"
-                    ToolTip="メニュー"
-                    AutomationProperties.Name="メニュー"
+                    ToolTip="{l:Tr Main_Menu}"
+                    AutomationProperties.Name="{l:Tr Main_Menu}"
                     Style="{StaticResource StripButtonStyle}"
                     Click="Menu_Click">
                 <!-- メニュー（≡）のアイコン -->
@@ -135,9 +136,10 @@
                 <Button.ContextMenu>
                     <ContextMenu>
                         <MenuItem x:Name="ShowInTaskbarMenu"
-                                  Header="ターミナルをタスクバーに表示"
+                                  Header="{l:Tr Main_ShowInTaskbar}"
                                   IsCheckable="True"
                                   Click="ShowInTaskbar_Click" />
+                        <MenuItem Header="{l:Tr Main_Settings}" Click="Settings_Click" />
                         <Separator />
                         <MenuItem x:Name="AboutMenu" Click="About_Click" />
                         <Separator />

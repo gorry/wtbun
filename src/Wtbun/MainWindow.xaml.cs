@@ -14,6 +14,7 @@ using Wtbun.Layout;
 using Wtbun.Native;
 using Wtbun.Projects;
 using Wtbun.Terminal;
+using Wtbun.Localization;
 
 namespace Wtbun;
 
@@ -87,9 +88,9 @@ public partial class MainWindow : Window
         InitializeComponent();
         DataContext = this;
         Title = AppProfile.ShortTitle;
-        ExitMenu.Header = $"{AppProfile.ShortTitle} を終了";
-        // ダイアログを出すので、末尾に「…」を付ける
-        AboutMenu.Header = $"{AppProfile.ShortTitle} について…";
+        // 略名を入れるメニューは、言語を変えたときにも作り直す
+        ApplyMenuTexts();
+        Loc.Instance.PropertyChanged += (_, _) => ApplyMenuTexts();
         _layout = new TerminalLayout(Height);
 
         _windowWatcher = new DispatcherTimer { Interval = WindowWatchInterval };
@@ -231,7 +232,7 @@ public partial class MainWindow : Window
             }
             if (missing.Count > 0)
             {
-                ShowError("次のプロジェクトのフォルダーが見つかりません。\n\n"
+                ShowError(Loc.Get("Main_MissingProjects") + "\n\n"
                     + string.Join("\n", missing));
             }
         }
@@ -455,7 +456,7 @@ public partial class MainWindow : Window
 
     private async void OpenProject_Click(object sender, RoutedEventArgs e)
     {
-        var dialog = new OpenFolderDialog { Title = "プロジェクトのフォルダーを選択" };
+        var dialog = new OpenFolderDialog { Title = Loc.Get("Main_SelectProjectFolder") };
         if (dialog.ShowDialog(this) != true)
         {
             return;
@@ -491,7 +492,7 @@ public partial class MainWindow : Window
         }
         if (!System.IO.Directory.Exists(directory))
         {
-            ShowError($"フォルダーが見つかりません。\n\n{directory}");
+            ShowError($"{Loc.Get("Main_FolderNotFound")}\n\n{directory}");
             return;
         }
         _history.Add(directory);
@@ -577,8 +578,8 @@ public partial class MainWindow : Window
             Debug.WriteLine(ex);
             RemoveProject(project);
             ShowError(ex.InnerException is null
-                ? "ターミナルのウィンドウを開けません。もう一度お試しください。"
-                : "Windows Terminal を起動できません。インストールされているか確認してください。");
+                ? Loc.Get("Main_CannotOpenWindow")
+                : Loc.Get("Main_CannotStartTerminal"));
             return false;
         }
     }
@@ -597,7 +598,7 @@ public partial class MainWindow : Window
             return;
         }
 
-        var hint = TerminalSettings.WarnsWhenClosingTabs() ? TerminalCloseWarningHint : null;
+        var hint = TerminalSettings.WarnsWhenClosingTabs() ? Loc.Get("Main_TerminalCloseHint") : null;
         var dialog = new AlreadyOpenWindow(project.Name, hint) { Owner = this };
         dialog.ShowDialog();
         // 選んでいる間に、Windows Terminal でウィンドウが閉じられたとき
@@ -631,7 +632,7 @@ public partial class MainWindow : Window
         {
             return;
         }
-        if (confirms && !ConfirmClosing($"「{project.Name}」を開き直しますか？実行中のコマンドは終了します。") || !Projects.Contains(project))
+        if (confirms && !ConfirmClosing(Loc.Format("Main_ConfirmReopen", project.Name)) || !Projects.Contains(project))
         {
             return;
         }
@@ -688,17 +689,17 @@ public partial class MainWindow : Window
     /// <summary>構成ファイルを扱えなかったときに出す文言。構成ファイルの問題でなければ null。</summary>
     private static string? ConfigErrorMessage(Exception ex) => ex switch
     {
-        TomlException { Line: { } line } => $"{ProjectConfigStore.FileName} の {line} 行目が正しくありません。",
-        TomlException => $"{ProjectConfigStore.FileName} の書き方が正しくありません。",
-        UnknownConfigKeyException { MisplacedInTab: true } unknown => $"{ProjectConfigStore.FileName} の「{unknown.Key}」は最初の [[tabs]] より前に書いてください。",
-        UnknownConfigKeyException unknown => $"{ProjectConfigStore.FileName} の「{unknown.Key}」は使用できない項目です。",
-        InvalidConfigValueException { Key: "tab_color" } => $"{ProjectConfigStore.FileName} の「tab_color」が正しくありません。'#RRGGBB' の形式で書いてください。",
-        InvalidConfigValueException { Key: "split" } => $"{ProjectConfigStore.FileName} の「split」が正しくありません。'right' か 'down' を書いてください。",
-        InvalidConfigValueException { Key: "size" } => $"{ProjectConfigStore.FileName} の「size」が正しくありません。0 より大きく 1 より小さい数を書いてください。",
-        InvalidConfigValueException { Key: "selected" } => $"{ProjectConfigStore.FileName} の「selected = true」が多すぎます。選ぶタブは 1 つ、タブの中で選ぶペインは 1 つにしてください。",
-        InvalidConfigValueException { Key: "panes" } => $"{ProjectConfigStore.FileName} の「panes」が正しくありません。[[tabs.panes]] の形で書いてください。",
-        InvalidConfigValueException invalid => $"{ProjectConfigStore.FileName} の「{invalid.Key}」が正しくありません。",
-        IOException or UnauthorizedAccessException => $"{ProjectConfigStore.FileName} を読み書きできません。アクセス権を確認してください。",
+        TomlException { Line: { } line } => Loc.Format("ConfigError_Line", ProjectConfigStore.FileName, line),
+        TomlException => Loc.Format("ConfigError_Syntax", ProjectConfigStore.FileName),
+        UnknownConfigKeyException { MisplacedInTab: true } unknown => Loc.Format("ConfigError_KeyBeforeTabs", ProjectConfigStore.FileName, unknown.Key),
+        UnknownConfigKeyException unknown => Loc.Format("ConfigError_UnknownKey", ProjectConfigStore.FileName, unknown.Key),
+        InvalidConfigValueException { Key: "tab_color" } => Loc.Format("ConfigError_TabColor", ProjectConfigStore.FileName),
+        InvalidConfigValueException { Key: "split" } => Loc.Format("ConfigError_Split", ProjectConfigStore.FileName),
+        InvalidConfigValueException { Key: "size" } => Loc.Format("ConfigError_Size", ProjectConfigStore.FileName),
+        InvalidConfigValueException { Key: "selected" } => Loc.Format("ConfigError_Selected", ProjectConfigStore.FileName),
+        InvalidConfigValueException { Key: "panes" } => Loc.Format("ConfigError_Panes", ProjectConfigStore.FileName),
+        InvalidConfigValueException invalid => Loc.Format("ConfigError_Value", ProjectConfigStore.FileName, invalid.Key),
+        IOException or UnauthorizedAccessException => Loc.Format("ConfigError_Access", ProjectConfigStore.FileName),
         _ => null,
     };
 
@@ -1039,6 +1040,27 @@ public partial class MainWindow : Window
 
     private void About_Click(object sender, RoutedEventArgs e) => new AboutWindow { Owner = this }.ShowDialog();
 
+    private void Settings_Click(object sender, RoutedEventArgs e)
+    {
+        var dialog = new SettingsWindow(Loc.Current) { Owner = this };
+        if (dialog.ShowDialog() != true || dialog.SelectedLanguage == Loc.Current)
+        {
+            return;
+        }
+        // 選んだ言語を記録して、すぐに切り替える（起動時の --lang で上書きしていたときも、選んだほうにする）
+        _settings.Language = dialog.SelectedLanguage;
+        _settings.Save();
+        Loc.Apply(dialog.SelectedLanguage);
+    }
+
+    /// <summary>略名を入れるメニューの文言。</summary>
+    private void ApplyMenuTexts()
+    {
+        ExitMenu.Header = Loc.Format("Main_Exit", AppProfile.ShortTitle);
+        // ダイアログを出すので、末尾に「…」を付ける（文言に含めている）
+        AboutMenu.Header = Loc.Format("Main_About", AppProfile.ShortTitle);
+    }
+
     /// <summary>
     /// 確認してから、ウィンドウに閉じるよう求める。タブは、ウィンドウが実際に閉じたときに RemoveClosedProjects で外す
     /// （Windows Terminal の確認で取り消されることがあるため）。
@@ -1052,7 +1074,7 @@ public partial class MainWindow : Window
         }
         // ウィンドウがもうなければ、確認せずにタブを外す。確認している間に閉じられることもあるので、確認の後でも確かめる
         if (TerminalWindows.Exists(project.WindowHandle)
-            && (!ConfirmClosing($"「{project.Name}」を閉じますか？実行中のコマンドは終了します。") || !Projects.Contains(project)))
+            && (!ConfirmClosing(Loc.Format("Main_ConfirmClose", project.Name)) || !Projects.Contains(project)))
         {
             return;
         }
@@ -1249,10 +1271,6 @@ public partial class MainWindow : Window
         }
     }
 
-    /// <summary>Windows Terminal の閉じる確認も重なる設定のときに、確認に添える案内。</summary>
-    private const string TerminalCloseWarningHint =
-        "Windows Terminal の確認が不要なら、設定の「操作」で「複数のタブを閉じるときに警告する」をオフにしてください。";
-
     private void ShowError(string message) =>
         MessageBox.Show(this, message, AppProfile.ShortTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
 
@@ -1268,7 +1286,7 @@ public partial class MainWindow : Window
         }
         if (TerminalSettings.WarnsWhenClosingTabs())
         {
-            message += "\n\n" + TerminalCloseWarningHint;
+            message += "\n\n" + Loc.Get("Main_TerminalCloseHint");
         }
         // ダイアログを出しているときは、そのダイアログを持ち主にする（タブ列を持ち主にすると、確認を閉じたときにタブ列が操作できるようになる）
         var owner = OwnedWindows.Cast<Window>().FirstOrDefault(w => w.IsVisible) ?? this;

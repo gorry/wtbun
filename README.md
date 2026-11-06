@@ -1,5 +1,7 @@
 # wtbun - Windows Terminal Bundler
 
+日本語 | [English](README.en.md)
+
 ## これはなに？
 
 Windows Terminal は、複数のターミナルをタブで 1 つのウィンドウにまとめられます。wtbun は、この「タブでまとめたウィンドウ」を、さらにプロジェクトの数だけ束ねて管理する Windows 用のアプリです。
@@ -52,6 +54,7 @@ Windows Terminal は、複数のターミナルをタブで 1 つのウィンド
 
 タブ列の右端の「≡」から選びます。
 
+- **環境設定…**：表示する言語（English・日本語）を選べます。選ぶとすぐに切り替わります。最初は Windows の表示言語に合わせます（日本語以外は English）。
 - **ターミナルをタスクバーに表示**：オフにすると、プロジェクトのウィンドウをタスクバーに出さず、wtbun だけを出します。wtbun のボタンを押すと、選んでいるプロジェクトのウィンドウも見えるようになります。
 
 ### バージョン情報
@@ -60,7 +63,7 @@ Windows Terminal は、複数のターミナルをタブで 1 つのウィンド
 
 ## プロジェクトの構成ファイル
 
-プロジェクトを開くと、プロジェクトのフォルダーの直下に `.wtbun.toml` を作ります（すでにあれば、それに従って開きます）。最初はタブ 1 つだけの構成です。開くタブを増やしたいときは、タブの右クリックの「プロジェクトの構成を編集…」を使うか、このファイルを書き換えます。最初に作るファイルには、各項目の説明と、タブを増やすときの例がコメントで入っています。
+プロジェクトを開くと、プロジェクトのフォルダーの直下に `.wtbun.toml` を作ります（すでにあれば、それに従って開きます）。最初はタブ 1 つだけの構成です。開くタブを増やしたいときは、タブの右クリックの「プロジェクトの構成を編集…」を使うか、このファイルを書き換えます。最初に作るファイルには、各項目の説明と、タブを増やすときの例がコメントで入っています。コメントは、作るときの表示の言語で書きます。
 
 タブには、プロジェクトのフォルダーの直下にある `.wtbun.ico` か `.wtbun.png`（この順に探します）をアイコンとして表示します。どちらもなければ wtbun のアイコンです。「プロジェクトの構成を編集…」の「インポート…」で画像を選ぶと、中央を正方形に切り抜いて `.wtbun.png` として保存します。
 
@@ -176,13 +179,19 @@ dotnet run --project src/Wtbun       # 起動
 dotnet run --project src/Wtbun -- --data-dir C:\temp\wtbun-test
 ```
 
+表示する言語を、設定を変えずにその起動の間だけ変えるには、`--lang` に `en-US` か `ja-JP` を指定します。
+
+```sh
+dotnet run --project src/Wtbun -- --lang en-US
+```
+
 リリース用にビルドすると、`src/Wtbun/bin/Release/net10.0-windows/Wtbun.exe` ができます。
 
 ```sh
 dotnet build wtbun.slnx -c Release
 ```
 
-配布用のパッケージは、リポジトリ直下の `release.cmd` で作ります。`release/wtbun_（バージョン）/` にリリース版の実行ファイルと README.md・LICENSE・NOTICE を入れ、そのフォルダーごと `release/wtbun_（バージョン）.zip` にまとめます。`wtbunhook.dll` も入れるので、Visual Studio の C++ ツールが必要です。
+配布用のパッケージは、リポジトリ直下の `release.cmd` で作ります。`release/wtbun_（バージョン）/` にリリース版の実行ファイルと README.md・README.en.md・LICENSE・NOTICE を入れ、そのフォルダーごと `release/wtbun_（バージョン）.zip` にまとめます。`wtbunhook.dll` も入れるので、Visual Studio の C++ ツールが必要です。
 
 ```sh
 release.cmd
@@ -194,6 +203,7 @@ release.cmd
 |---|---|
 | `src/Wtbun/` | アプリ本体（C# / WPF） |
 | `src/Wtbun/Config/` | 構成ファイル `.wtbun.toml`・保存した状態・設定の読み書き |
+| `src/Wtbun/Localization/` | 画面の文言（`Strings.resx` が英語、`Strings.ja.resx` が日本語）と、言語の切り替え |
 | `src/Wtbun/Terminal/` | Windows Terminal のウィンドウを開く・探す・閉じる |
 | `src/Wtbun/Layout/` | ウィンドウの位置と大きさをそろえる |
 | `src/Wtbun/Native/` | Win32 API の呼び出し（ウィンドウの操作・監視、タスクバー） |

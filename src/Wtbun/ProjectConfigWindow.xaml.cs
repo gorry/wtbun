@@ -11,6 +11,7 @@ using Tomlyn;
 using Wtbun.Config;
 using Wtbun.Projects;
 using Wtbun.Terminal;
+using Wtbun.Localization;
 
 namespace Wtbun;
 
@@ -36,7 +37,7 @@ public partial class ProjectConfigWindow : Window
         InitializeComponent();
         _projectDir = project.Directory;
         _document = document;
-        Title = $"プロジェクトの構成 - {project.Name}";
+        Title = Loc.Format("Config_Title", project.Name);
 
         NameBox.Text = document.Config.Name ?? "";
         _items = new ObservableCollection<EditItem>(document.Config.Tabs.SelectMany(tab =>
@@ -252,7 +253,7 @@ public partial class ProjectConfigWindow : Window
         var current = Path.GetFullPath(Path.Combine(_projectDir, tab.Dir?.Trim() ?? "."));
         var dialog = new OpenFolderDialog
         {
-            Title = "開始フォルダーを選択",
+            Title = Loc.Get("Config_SelectStartFolder"),
             InitialDirectory = Directory.Exists(current) ? current : _projectDir,
         };
         if (dialog.ShowDialog(this) == true)
@@ -273,8 +274,8 @@ public partial class ProjectConfigWindow : Window
     {
         var dialog = new OpenFileDialog
         {
-            Title = "アイコンの画像を選択",
-            Filter = "画像ファイル|*.png;*.jpg;*.jpeg;*.bmp;*.gif;*.ico;*.tif;*.tiff|すべてのファイル|*.*",
+            Title = Loc.Get("Config_SelectIconImage"),
+            Filter = $"{Loc.Get("Config_ImageFiles")}|*.png;*.jpg;*.jpeg;*.bmp;*.gif;*.ico;*.tif;*.tiff|{Loc.Get("Config_AllFiles")}|*.*",
         };
         if (dialog.ShowDialog(this) != true)
         {
@@ -282,7 +283,7 @@ public partial class ProjectConfigWindow : Window
         }
         if (ProjectIcon.TryLoadImage(dialog.FileName) is not { } image)
         {
-            ShowMessage("画像を読み込めません。別のファイルを選択してください。");
+            ShowMessage(Loc.Get("Config_CannotLoadImage"));
             return;
         }
         _importedIcon = ProjectIcon.CropToSquare(image);
@@ -294,10 +295,10 @@ public partial class ProjectConfigWindow : Window
     {
         var hasIconFile = File.Exists(Path.Combine(_projectDir, ProjectIcon.IconFileName));
         IconHint.Text = _importedIcon is null
-            ? "画像の中央を正方形に切り抜いて使用します。"
+            ? Loc.Get("Config_IconHintCrop")
             : hasIconFile
-                ? $"フォルダーに {ProjectIcon.IconFileName} があるため、タブにはそちらを表示します。"
-                : "保存すると、タブのアイコンが変わります。";
+                ? Loc.Format("Config_IconHintIco", ProjectIcon.IconFileName)
+                : Loc.Get("Config_IconHintSave");
     }
 
     private void Save_Click(object sender, RoutedEventArgs e)
@@ -305,13 +306,13 @@ public partial class ProjectConfigWindow : Window
         if (_items.FirstOrDefault(t => !TabColor.IsValid(t.TabColor)) is { } invalidColor)
         {
             TabList.SelectedItem = invalidColor;
-            ShowMessage($"「{invalidColor.Name}」のタブの色が正しくありません。#RRGGBB の形式で入力してください。");
+            ShowMessage(Loc.Format("Config_InvalidColor", invalidColor.Name));
             return;
         }
         if (_items.FirstOrDefault(t => t.IsPane && !t.TryGetSize(out _)) is { } invalidSize)
         {
             TabList.SelectedItem = invalidSize;
-            ShowMessage($"「{invalidSize.Name}」のサイズが正しくありません。1 から 99 までの数を入力してください。");
+            ShowMessage(Loc.Format("Config_InvalidSize", invalidSize.Name));
             return;
         }
         // 構成ファイルの保存に失敗してもう一度保存するときに、同じ画像を書き直すだけで済むよう、アイコンを先に保存する
@@ -361,7 +362,7 @@ public partial class ProjectConfigWindow : Window
             // このダイアログを開いている間に、ファイルが手で書き換えられていたら上書きしない
             if (ProjectConfigStore.ReadTextOrNull(_document.Path) != _document.Text)
             {
-                ShowMessage($"{fileName} が別の場所で変更されました。このダイアログを開き直してください。");
+                ShowMessage(Loc.Format("Config_ChangedElsewhere", fileName));
                 return false;
             }
 
@@ -376,17 +377,17 @@ public partial class ProjectConfigWindow : Window
         catch (ProjectConfigNotEditableException ex)
         {
             Debug.WriteLine(ex);
-            ShowMessage($"この {fileName} はここから保存できません。ファイルを直接編集してください。");
+            ShowMessage(Loc.Format("Config_NotEditable", fileName));
         }
         catch (Exception ex) when (ex is TomlException or UnknownConfigKeyException or InvalidConfigValueException)
         {
             Debug.WriteLine(ex);
-            ShowMessage($"{fileName} が別の場所で変更されました。このダイアログを開き直してください。");
+            ShowMessage(Loc.Format("Config_ChangedElsewhere", fileName));
         }
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
         {
             Debug.WriteLine(ex);
-            ShowMessage($"{fileName} を保存できません。アクセス権を確認してください。");
+            ShowMessage(Loc.Format("Config_CannotSave", fileName));
         }
         return false;
     }
@@ -401,7 +402,7 @@ public partial class ProjectConfigWindow : Window
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
         {
             Debug.WriteLine(ex);
-            ShowMessage($"{ProjectIcon.ImageFileName} を保存できません。アクセス権を確認してください。");
+            ShowMessage(Loc.Format("Config_CannotSave", ProjectIcon.ImageFileName));
             return false;
         }
     }
@@ -409,7 +410,7 @@ public partial class ProjectConfigWindow : Window
     private bool ConfirmLosingComments() =>
         MessageBox.Show(
             this,
-            $"{ProjectConfigStore.FileName} のコメントの一部が削除されます。保存しますか？",
+            Loc.Format("Config_ConfirmLoseComments", ProjectConfigStore.FileName),
             AppProfile.ShortTitle,
             MessageBoxButton.YesNo,
             MessageBoxImage.Question,
@@ -514,17 +515,17 @@ public partial class ProjectConfigWindow : Window
             }
         }
 
-        public string SelectedLabel => IsPane ? "開いたときにこのペインを選択" : "開いたときにこのタブを選択";
+        public string SelectedLabel => Loc.Get(IsPane ? "Config_SelectPaneOnOpen" : "Config_SelectTabOnOpen");
 
         public string SelectedHint => IsPane
-            ? "どのペインも選択しない場合は、タブの行（最初のペイン）を選択します。"
-            : "どのタブも選択しない場合は、最後のタブを選択します。";
+            ? Loc.Get("Config_SelectPaneHint")
+            : Loc.Get("Config_SelectTabHint");
 
         /// <summary>メッセージに出す名前。</summary>
-        public string Name => string.IsNullOrWhiteSpace(Title) ? (IsPane ? "（ペイン）" : "（タイトルなし）") : Title;
+        public string Name => string.IsNullOrWhiteSpace(Title) ? Loc.Get(IsPane ? "Config_UnnamedPane" : "Config_Untitled") : Title;
 
         /// <summary>一覧に出す文字。ペインは字下げして、どのタブのものか分かるようにする。</summary>
-        public string Header => IsPane ? $"　└ {Name}" : Name;
+        public string Header => IsPane ? Loc.Format("Config_PaneHeader", Name) : Name;
 
         // 画面の読み上げなどに、一覧に出ているものと同じ文字を渡す
         public override string ToString() => Header;

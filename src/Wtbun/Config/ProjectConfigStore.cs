@@ -2,6 +2,7 @@ using System.IO;
 using System.Text.Json;
 using Tomlyn;
 using Tomlyn.Model;
+using Wtbun.Localization;
 
 namespace Wtbun.Config;
 
@@ -119,8 +120,9 @@ public static class ProjectConfigStore
         return config;
     }
 
-    /// <summary>ファイルがないときに作る内容。</summary>
-    public static string DefaultText => DefaultFileText.ReplaceLineEndings();
+    /// <summary>ファイルがないときに作る内容。コメントは、作るときの表示の言語で書く（項目と値は同じ）。</summary>
+    public static string DefaultText =>
+        (Loc.Current == "ja-JP" ? DefaultFileTextJa : DefaultFileTextEn).ReplaceLineEndings();
 
     private static ProjectConfig Load(string path) => Parse(File.ReadAllText(path));
 
@@ -192,8 +194,9 @@ public static class ProjectConfigStore
         }
     }
 
-    // 利用者が README を読まなくても書き換えられるよう、項目の説明と例をコメントで入れておく
-    private const string DefaultFileText = $$"""
+    // 利用者が README を読まなくても書き換えられるよう、項目の説明と例をコメントで入れておく。
+    // 英語と日本語で、行の並びと有効な行（version と [[tabs]]）をそろえる
+    private const string DefaultFileTextJa = $$"""
         # {{AppProfile.ShortTitle}} のプロジェクト構成ファイルです。
         # {{AppProfile.ShortTitle}} でこのフォルダーを開くと、ここに書いた構成で Windows Terminal を開きます。
         # 変更は次回プロジェクトを開いたときに反映されます。
@@ -252,6 +255,73 @@ public static class ProjectConfigStore
 
         # タブを分割する例です。行頭の「# 」を削除すると使用できます。
         # 直前の [[tabs]] のタブを右に分割し、Windows PowerShell で今日の日付を表示して、プロンプトで待機します。
+        # [[tabs.panes]]
+        # split = 'right'
+        # size = 0.4
+        # profile = 'Windows PowerShell'
+        # command = 'powershell -NoExit -Command Get-Date'
+
+        """;
+
+    private const string DefaultFileTextEn = $$"""
+        # Project configuration file for {{AppProfile.ShortTitle}}.
+        # When you open this folder in {{AppProfile.ShortTitle}}, Windows Terminal opens with the layout written here.
+        # Changes take effect the next time you open the project.
+        # Tabs you add in Windows Terminal are not saved to this file.
+
+        # File format version. Do not change it.
+        version = 1
+
+        # Name shown on the {{AppProfile.ShortTitle}} tab. If omitted, the folder name is shown.
+        # To use it, remove the "# " at the start of the line. Write it before [[tabs]].
+        # name = 'my project'
+
+        # Write the tabs to open, each starting with a [[tabs]] line. They open from top to bottom.
+        # You can set the following keys. All of them are optional.
+        #   title   - Tab title. If omitted, Windows Terminal sets it.
+        #   dir     - Starting folder. Relative paths are relative to the folder of this file.
+        #              If omitted, the folder of this file is used.
+        #   profile - Windows Terminal profile name. If omitted, the default profile is used.
+        #   command - Command to run. If omitted, the profile setting is used.
+        #              Example: npm run dev
+        #              Batch files (.cmd, .bat) can also be used.
+        #              The tab closes when the command ends. To keep it open, put cmd /k before the command
+        #              (for PowerShell, powershell -NoExit -Command).
+        #   append_command_line - If true, command is appended to the command line of the profile.
+        #              Example: profile = 'Windows PowerShell' and command = '-NoExit -Command Get-Date'
+        #   tab_color - Tab color. Write it as '#RRGGBB' or '#RGB'. Example: '#2E7D32'
+        #   color_scheme - Name of a color scheme to use instead of the profile's. Example: 'One Half Dark'
+        #   suppress_application_title - If true, running programs can't change the tab title.
+        #              If false, they can. If omitted, the profile setting is used.
+        #   inherit_environment - If true, the environment variables of Windows Terminal are inherited.
+        #              If false, the environment variables are loaded fresh.
+        #              If omitted, they are inherited when command is set.
+        #   selected - If true, this tab is selected when opened. Only one tab can have it.
+        #              If omitted, the last tab is selected.
+        # To split a tab, write [[tabs.panes]] after its [[tabs]]. Each one splits the previous pane, in order.
+        # In [[tabs.panes]], you can set the keys above and also the following keys. All of them are optional.
+        #   split - Where to put the new pane: 'right' or 'down'. If omitted, it depends on the pane's width and height.
+        #   size - Size of the new pane, as a ratio of the pane before splitting. Write a number greater than 0 and less than 1.
+        #              Example: 0.4. If omitted, half.
+        #   duplicate - If true, the pane opens with the same profile and folder as the previous pane.
+        #   selected in [[tabs.panes]] selects the pane within the tab. Only one pane per tab can have it.
+        #              If omitted, the first pane (the one opened by [[tabs]]) is selected.
+        # Enclose values other than true and false in '...' (single quotes). \ and " inside can be written as is.
+        # To include ' in a value, enclose it in "..." and write \ as \\ and " as \".
+
+        [[tabs]]
+        dir = '.'
+
+        # Example of adding a tab. Remove the "# " at the start of the lines to use it.
+        # Lists the files in Windows PowerShell and waits at the prompt.
+        # [[tabs]]
+        # title = 'files'
+        # dir = '.'
+        # profile = 'Windows PowerShell'
+        # command = 'powershell -NoExit -Command Get-ChildItem'
+
+        # Example of splitting a tab. Remove the "# " at the start of the lines to use it.
+        # Splits the tab of the previous [[tabs]] to the right, shows today's date in Windows PowerShell, and waits at the prompt.
         # [[tabs.panes]]
         # split = 'right'
         # size = 0.4

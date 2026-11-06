@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  画面の文言（日本語）。キーは Strings.resx と同じにする。
+-->
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Common_Cancel" xml:space="preserve">
+    <value>キャンセル</value>
+  </data>
+  <data name="Common_Close" xml:space="preserve">
+    <value>閉じる</value>
+  </data>
+  <data name="Common_OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="Main_MoveLeft" xml:space="preserve">
+    <value>左へ移動</value>
+  </data>
+  <data name="Main_MoveRight" xml:space="preserve">
+    <value>右へ移動</value>
+  </data>
+  <data name="Main_EditConfig" xml:space="preserve">
+    <value>プロジェクトの構成を編集…</value>
+  </data>
+  <data name="Main_Reopen" xml:space="preserve">
+    <value>プロジェクトを開き直す</value>
+  </data>
+  <data name="Main_OpenProject" xml:space="preserve">
+    <value>プロジェクトを開く</value>
+  </data>
+  <data name="Main_SelectFolder" xml:space="preserve">
+    <value>フォルダーを選択…</value>
+  </data>
+  <data name="Main_History" xml:space="preserve">
+    <value>履歴</value>
+  </data>
+  <data name="Main_ClearHistory" xml:space="preserve">
+    <value>履歴の消去…</value>
+  </data>
+  <data name="Main_Menu" xml:space="preserve">
+    <value>メニュー</value>
+  </data>
+  <data name="Main_ShowInTaskbar" xml:space="preserve">
+    <value>ターミナルをタスクバーに表示</value>
+  </data>
+  <data name="Main_Settings" xml:space="preserve">
+    <value>環境設定…</value>
+  </data>
+  <data name="Main_About" xml:space="preserve">
+    <value>{0} について…</value>
+  </data>
+  <data name="Main_Exit" xml:space="preserve">
+    <value>{0} を終了</value>
+  </data>
+  <data name="Main_MissingProjects" xml:space="preserve">
+    <value>次のプロジェクトのフォルダーが見つかりません。</value>
+  </data>
+  <data name="Main_SelectProjectFolder" xml:space="preserve">
+    <value>プロジェクトのフォルダーを選択</value>
+  </data>
+  <data name="Main_FolderNotFound" xml:space="preserve">
+    <value>フォルダーが見つかりません。</value>
+  </data>
+  <data name="Main_CannotOpenWindow" xml:space="preserve">
+    <value>ターミナルのウィンドウを開けません。もう一度お試しください。</value>
+  </data>
+  <data name="Main_CannotStartTerminal" xml:space="preserve">
+    <value>Windows Terminal を起動できません。インストールされているか確認してください。</value>
+  </data>
+  <data name="Main_ConfirmReopen" xml:space="preserve">
+    <value>「{0}」を開き直しますか？実行中のコマンドは終了します。</value>
+  </data>
+  <data name="Main_ConfirmClose" xml:space="preserve">
+    <value>「{0}」を閉じますか？実行中のコマンドは終了します。</value>
+  </data>
+  <data name="Main_TerminalCloseHint" xml:space="preserve">
+    <value>Windows Terminal の確認が不要なら、設定の「操作」で「複数のタブを閉じるときに警告する」をオフにしてください。</value>
+  </data>
+  <data name="ConfigError_Line" xml:space="preserve">
+    <value>{0} の {1} 行目が正しくありません。</value>
+  </data>
+  <data name="ConfigError_Syntax" xml:space="preserve">
+    <value>{0} の書き方が正しくありません。</value>
+  </data>
+  <data name="ConfigError_KeyBeforeTabs" xml:space="preserve">
+    <value>{0} の「{1}」は最初の [[tabs]] より前に書いてください。</value>
+  </data>
+  <data name="ConfigError_UnknownKey" xml:space="preserve">
+    <value>{0} の「{1}」は使用できない項目です。</value>
+  </data>
+  <data name="ConfigError_TabColor" xml:space="preserve">
+    <value>{0} の「tab_color」が正しくありません。'#RRGGBB' の形式で書いてください。</value>
+  </data>
+  <data name="ConfigError_Split" xml:space="preserve">
+    <value>{0} の「split」が正しくありません。'right' か 'down' を書いてください。</value>
+  </data>
+  <data name="ConfigError_Size" xml:space="preserve">
+    <value>{0} の「size」が正しくありません。0 より大きく 1 より小さい数を書いてください。</value>
+  </data>
+  <data name="ConfigError_Selected" xml:space="preserve">
+    <value>{0} の「selected = true」が多すぎます。選ぶタブは 1 つ、タブの中で選ぶペインは 1 つにしてください。</value>
+  </data>
+  <data name="ConfigError_Panes" xml:space="preserve">
+    <value>{0} の「panes」が正しくありません。[[tabs.panes]] の形で書いてください。</value>
+  </data>
+  <data name="ConfigError_Value" xml:space="preserve">
+    <value>{0} の「{1}」が正しくありません。</value>
+  </data>
+  <data name="ConfigError_Access" xml:space="preserve">
+    <value>{0} を読み書きできません。アクセス権を確認してください。</value>
+  </data>
+  <data name="About_Title" xml:space="preserve">
+    <value>{0} について</value>
+  </data>
+  <data name="About_AppName" xml:space="preserve">
+    <value>{0}（{1}）</value>
+  </data>
+  <data name="About_Version" xml:space="preserve">
+    <value>バージョン {0}</value>
+  </data>
+  <data name="About_ShowLatest" xml:space="preserve">
+    <value>最新の内容を Web で表示</value>
+  </data>
+  <data name="About_CopyVersion" xml:space="preserve">
+    <value>バージョン情報をコピー</value>
+  </data>
+  <data name="About_CannotOpenBrowser" xml:space="preserve">
+    <value>ブラウザーを開けません。</value>
+  </data>
+  <data name="About_CannotCopy" xml:space="preserve">
+    <value>コピーできませんでした。もう一度お試しください。</value>
+  </data>
+  <data name="AlreadyOpen_Message" xml:space="preserve">
+    <value>「{0}」はすでに開いています。</value>
+  </data>
+  <data name="AlreadyOpen_Hint" xml:space="preserve">
+    <value>開き直すと、構成ファイルを読み込み直してウィンドウを開き直します。実行中のコマンドは終了します。</value>
+  </data>
+  <data name="AlreadyOpen_Reopen" xml:space="preserve">
+    <value>開き直す</value>
+  </data>
+  <data name="AlreadyOpen_Activate" xml:space="preserve">
+    <value>前面に表示</value>
+  </data>
+  <data name="App_NoDataDir" xml:space="preserve">
+    <value>保存先のフォルダーが指定されていません。{0} の後ろにフォルダーを指定してください。</value>
+  </data>
+  <data name="App_BadLanguage" xml:space="preserve">
+    <value>言語の指定が正しくありません。{0} の後ろに次のどれかを指定してください：{1}</value>
+  </data>
+  <data name="ClearHistory_Title" xml:space="preserve">
+    <value>履歴の消去 - {0}</value>
+  </data>
+  <data name="ClearHistory_Prompt" xml:space="preserve">
+    <value>消去するフォルダーを選択してください。</value>
+  </data>
+  <data name="ClearHistory_Unusable" xml:space="preserve">
+    <value>無効になったフォルダー（{0} 件）</value>
+  </data>
+  <data name="ClearHistory_UnusableHint" xml:space="preserve">
+    <value>フォルダーがなくなったか、構成ファイルがなくなったフォルダーです。</value>
+  </data>
+  <data name="ClearHistory_All" xml:space="preserve">
+    <value>すべてのフォルダー（{0} 件）</value>
+  </data>
+  <data name="ClearHistory_Clear" xml:space="preserve">
+    <value>消去</value>
+  </data>
+  <data name="Settings_Title" xml:space="preserve">
+    <value>環境設定 - {0}</value>
+  </data>
+  <data name="Settings_Language" xml:space="preserve">
+    <value>言語</value>
+  </data>
+  <data name="Config_Title" xml:space="preserve">
+    <value>プロジェクトの構成 - {0}</value>
+  </data>
+  <data name="Config_ProjectName" xml:space="preserve">
+    <value>プロジェクト名</value>
+  </data>
+  <data name="Config_ProjectNameHint" xml:space="preserve">
+    <value>空欄の場合はフォルダー名を表示します。</value>
+  </data>
+  <data name="Config_Icon" xml:space="preserve">
+    <value>アイコン</value>
+  </data>
+  <data name="Config_Import" xml:space="preserve">
+    <value>インポート…</value>
+  </data>
+  <data name="Config_IconHintCrop" xml:space="preserve">
+    <value>画像の中央を正方形に切り抜いて使用します。</value>
+  </data>
+  <data name="Config_IconHintIco" xml:space="preserve">
+    <value>フォルダーに {0} があるため、タブにはそちらを表示します。</value>
+  </data>
+  <data name="Config_IconHintSave" xml:space="preserve">
+    <value>保存すると、タブのアイコンが変わります。</value>
+  </data>
+  <data name="Config_TabsAndPanes" xml:space="preserve">
+    <value>開くタブとペイン</value>
+  </data>
+  <data name="Config_TabList" xml:space="preserve">
+    <value>開くタブ</value>
+  </data>
+  <data name="Config_Duplicate" xml:space="preserve">
+    <value>複製</value>
+  </data>
+  <data name="Config_Remove" xml:space="preserve">
+    <value>削除</value>
+  </data>
+  <data name="Config_MoveUp" xml:space="preserve">
+    <value>上へ</value>
+  </data>
+  <data name="Config_MoveDown" xml:space="preserve">
+    <value>下へ</value>
+  </data>
+  <data name="Config_AddTab" xml:space="preserve">
+    <value>タブを追加</value>
+  </data>
+  <data name="Config_AddPane" xml:space="preserve">
+    <value>ペインを追加</value>
+  </data>
+  <data name="Config_PaneHeader" xml:space="preserve">
+    <value>　└ {0}</value>
+  </data>
+  <data name="Config_UnnamedPane" xml:space="preserve">
+    <value>（ペイン）</value>
+  </data>
+  <data name="Config_Untitled" xml:space="preserve">
+    <value>（タイトルなし）</value>
+  </data>
+  <data name="Config_SelectTabOnOpen" xml:space="preserve">
+    <value>開いたときにこのタブを選択</value>
+  </data>
+  <data name="Config_SelectPaneOnOpen" xml:space="preserve">
+    <value>開いたときにこのペインを選択</value>
+  </data>
+  <data name="Config_SelectTabHint" xml:space="preserve">
+    <value>どのタブも選択しない場合は、最後のタブを選択します。</value>
+  </data>
+  <data name="Config_SelectPaneHint" xml:space="preserve">
+    <value>どのペインも選択しない場合は、タブの行（最初のペイン）を選択します。</value>
+  </data>
+  <data name="Config_SplitDirection" xml:space="preserve">
+    <value>分割の向き</value>
+  </data>
+  <data name="Config_SplitAuto" xml:space="preserve">
+    <value>自動</value>
+  </data>
+  <data name="Config_SplitRight" xml:space="preserve">
+    <value>右に分割</value>
+  </data>
+  <data name="Config_SplitDown" xml:space="preserve">
+    <value>下に分割</value>
+  </data>
+  <data name="Config_SplitHint" xml:space="preserve">
+    <value>直前のペインを分割します。自動の場合は、ペインの縦横の長さで決まります。</value>
+  </data>
+  <data name="Config_Size" xml:space="preserve">
+    <value>サイズ（%）</value>
+  </data>
+  <data name="Config_SizeName" xml:space="preserve">
+    <value>サイズ</value>
+  </data>
+  <data name="Config_SizeHint" xml:space="preserve">
+    <value>分割する前のペインに対する大きさです。空欄の場合は半分です。</value>
+  </data>
+  <data name="Config_DuplicatePane" xml:space="preserve">
+    <value>直前のペインを複製</value>
+  </data>
+  <data name="Config_DuplicatePaneHint" xml:space="preserve">
+    <value>直前のペインと同じプロファイルとフォルダーで開きます。</value>
+  </data>
+  <data name="Config_TabTitle" xml:space="preserve">
+    <value>タイトル</value>
+  </data>
+  <data name="Config_TabTitleHint" xml:space="preserve">
+    <value>空欄の場合は Windows Terminal が設定します。</value>
+  </data>
+  <data name="Config_StartFolder" xml:space="preserve">
+    <value>開始フォルダー</value>
+  </data>
+  <data name="Config_Browse" xml:space="preserve">
+    <value>参照…</value>
+  </data>
+  <data name="Config_StartFolderHint" xml:space="preserve">
+    <value>空欄の場合はプロジェクトのフォルダーです。相対パスも使用できます。</value>
+  </data>
+  <data name="Config_SelectStartFolder" xml:space="preserve">
+    <value>開始フォルダーを選択</value>
+  </data>
+  <data name="Config_Profile" xml:space="preserve">
+    <value>プロファイル</value>
+  </data>
+  <data name="Config_ProfileHint" xml:space="preserve">
+    <value>空欄の場合は既定のプロファイルを使用します。</value>
+  </data>
+  <data name="Config_Command" xml:space="preserve">
+    <value>コマンド</value>
+  </data>
+  <data name="Config_CommandHint" xml:space="preserve">
+    <value>コマンドが終了するとタブも閉じます。空欄の場合はプロファイルの設定に従います。</value>
+  </data>
+  <data name="Config_Append" xml:space="preserve">
+    <value>コマンドをプロファイルのコマンドの後ろに追加</value>
+  </data>
+  <data name="Config_AppendHint" xml:space="preserve">
+    <value>コマンドには、プロファイルのコマンドに渡す引数を入力します。</value>
+  </data>
+  <data name="Config_TabColor" xml:space="preserve">
+    <value>タブの色</value>
+  </data>
+  <data name="Config_TabColorHint" xml:space="preserve">
+    <value>#RRGGBB の形式で入力します（例：#2E7D32）。空欄の場合はプロファイルの設定に従います。</value>
+  </data>
+  <data name="Config_ColorScheme" xml:space="preserve">
+    <value>配色</value>
+  </data>
+  <data name="Config_FollowProfileHint" xml:space="preserve">
+    <value>空欄の場合はプロファイルの設定に従います。</value>
+  </data>
+  <data name="Config_TitleChange" xml:space="preserve">
+    <value>プログラムによるタイトルの変更</value>
+  </data>
+  <data name="Config_FollowProfile" xml:space="preserve">
+    <value>プロファイルの設定に従う</value>
+  </data>
+  <data name="Config_Allow" xml:space="preserve">
+    <value>許可する</value>
+  </data>
+  <data name="Config_Deny" xml:space="preserve">
+    <value>許可しない</value>
+  </data>
+  <data name="Config_Environment" xml:space="preserve">
+    <value>環境変数</value>
+  </data>
+  <data name="Config_EnvDefault" xml:space="preserve">
+    <value>既定</value>
+  </data>
+  <data name="Config_EnvInherit" xml:space="preserve">
+    <value>Windows Terminal から引き継ぐ</value>
+  </data>
+  <data name="Config_EnvReload" xml:space="preserve">
+    <value>新しく読み込む</value>
+  </data>
+  <data name="Config_EnvHint" xml:space="preserve">
+    <value>既定では、コマンドを指定した場合に引き継ぎます。</value>
+  </data>
+  <data name="Config_ApplyNote" xml:space="preserve">
+    <value>タブとペインの変更は次回プロジェクトを開いたときに反映されます。</value>
+  </data>
+  <data name="Config_Save" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="Config_SelectIconImage" xml:space="preserve">
+    <value>アイコンの画像を選択</value>
+  </data>
+  <data name="Config_ImageFiles" xml:space="preserve">
+    <value>画像ファイル</value>
+  </data>
+  <data name="Config_AllFiles" xml:space="preserve">
+    <value>すべてのファイル</value>
+  </data>
+  <data name="Config_CannotLoadImage" xml:space="preserve">
+    <value>画像を読み込めません。別のファイルを選択してください。</value>
+  </data>
+  <data name="Config_InvalidColor" xml:space="preserve">
+    <value>「{0}」のタブの色が正しくありません。#RRGGBB の形式で入力してください。</value>
+  </data>
+  <data name="Config_InvalidSize" xml:space="preserve">
+    <value>「{0}」のサイズが正しくありません。1 から 99 までの数を入力してください。</value>
+  </data>
+  <data name="Config_ChangedElsewhere" xml:space="preserve">
+    <value>{0} が別の場所で変更されました。このダイアログを開き直してください。</value>
+  </data>
+  <data name="Config_NotEditable" xml:space="preserve">
+    <value>この {0} はここから保存できません。ファイルを直接編集してください。</value>
+  </data>
+  <data name="Config_CannotSave" xml:space="preserve">
+    <value>{0} を保存できません。アクセス権を確認してください。</value>
+  </data>
+  <data name="Config_ConfirmLoseComments" xml:space="preserve">
+    <value>{0} のコメントの一部が削除されます。保存しますか？</value>
+  </data>
+</root>

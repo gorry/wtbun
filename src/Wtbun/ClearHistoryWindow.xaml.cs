@@ -1,5 +1,6 @@
 using System.Windows;
 using Wtbun.Config;
+using Wtbun.Localization;
 
 namespace Wtbun;
 
@@ -20,13 +21,13 @@ public partial class ClearHistoryWindow : Window
     public ClearHistoryWindow(ProjectHistory history)
     {
         InitializeComponent();
-        Title = $"履歴の消去 - {AppProfile.ShortTitle}";
+        Title = Loc.Format("ClearHistory_Title", AppProfile.ShortTitle);
 
         // 開いた時点で調べる（ネットワーク上のフォルダーなどで遅いときも、ここで 1 回だけにする）
         _unusable = history.UnusableDirectories();
         _allCount = history.Directories.Count;
-        UnusableOption.Content = $"無効になったフォルダー（{_unusable.Count} 件）";
-        AllOption.Content = $"すべてのフォルダー（{_allCount} 件）";
+        UnusableOption.Content = Loc.Format("ClearHistory_Unusable", _unusable.Count);
+        AllOption.Content = Loc.Format("ClearHistory_All", _allCount);
         // 無効なものがなければ、すべてを選んでおく（無効なほうを選んだまま消去しても、何も起きないので）
         if (_unusable.Count == 0)
         {

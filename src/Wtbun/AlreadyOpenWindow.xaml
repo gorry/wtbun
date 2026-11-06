@@ -1,6 +1,7 @@
 <Window x:Class="Wtbun.AlreadyOpenWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:l="clr-namespace:Wtbun.Localization"
         Width="420"
         SizeToContent="Height"
         ResizeMode="NoResize"
@@ -22,14 +23,14 @@
 
     <StackPanel Margin="12">
         <TextBlock x:Name="MessageText" TextWrapping="Wrap" />
-        <TextBlock Text="開き直すと、構成ファイルを読み込み直してウィンドウを開き直します。実行中のコマンドは終了します。" Style="{StaticResource HintStyle}" />
+        <TextBlock Text="{l:Tr AlreadyOpen_Hint}" Style="{StaticResource HintStyle}" />
         <TextBlock x:Name="TerminalHint" Style="{StaticResource HintStyle}" Visibility="Collapsed" />
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,16,0,0">
-            <Button Content="開き直す" Style="{StaticResource DialogButtonStyle}" Click="Reopen_Click" />
+            <Button Content="{l:Tr AlreadyOpen_Reopen}" Style="{StaticResource DialogButtonStyle}" Click="Reopen_Click" />
             <!-- 実行中のコマンドを誤って終了させないよう、Enter は前面に表示にする -->
-            <Button Content="前面に表示" IsDefault="True" Style="{StaticResource DialogButtonStyle}" Click="Activate_Click" />
-            <Button Content="キャンセル" IsCancel="True" Style="{StaticResource DialogButtonStyle}" />
+            <Button Content="{l:Tr AlreadyOpen_Activate}" IsDefault="True" Style="{StaticResource DialogButtonStyle}" Click="Activate_Click" />
+            <Button Content="{l:Tr Common_Cancel}" IsCancel="True" Style="{StaticResource DialogButtonStyle}" />
         </StackPanel>
     </StackPanel>
 </Window>

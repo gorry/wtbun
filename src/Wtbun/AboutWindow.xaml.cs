@@ -5,6 +5,7 @@ using System.Windows.Documents;
 using System.Windows.Interop;
 using Wtbun.Native;
 using Wtbun.Projects;
+using Wtbun.Localization;
 
 namespace Wtbun;
 
@@ -17,11 +18,11 @@ public partial class AboutWindow : Window
     public AboutWindow()
     {
         InitializeComponent();
-        Title = $"{AppProfile.ShortTitle} について";
+        Title = Loc.Format("About_Title", AppProfile.ShortTitle);
 
         AppIcon.Source = ProjectIcon.Default;
-        TitleText.Text = $"{AppProfile.Title}（{AppProfile.ShortTitle}）";
-        VersionText.Text = $"バージョン {AppProfile.Version}";
+        TitleText.Text = Loc.Format("About_AppName", AppProfile.Title, AppProfile.ShortTitle);
+        VersionText.Text = Loc.Format("About_Version", AppProfile.Version);
         CopyrightText.Text = string.IsNullOrEmpty(AppProfile.Author)
             ? AppProfile.Copyright
             : $"{AppProfile.Copyright}\n{AppProfile.Author}";
@@ -77,7 +78,7 @@ public partial class AboutWindow : Window
         catch (Exception ex) when (ex is System.ComponentModel.Win32Exception or InvalidOperationException)
         {
             Debug.WriteLine(ex);
-            MessageBox.Show(this, "ブラウザーを開けません。", AppProfile.ShortTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
+            MessageBox.Show(this, Loc.Get("About_CannotOpenBrowser"), AppProfile.ShortTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
         }
     }
 
@@ -91,7 +92,7 @@ public partial class AboutWindow : Window
         if (!ClipboardText.TrySet(text, new WindowInteropHelper(this).Handle))
         {
             // ほかのアプリがクリップボードを開いたままのとき
-            MessageBox.Show(this, "コピーできませんでした。もう一度お試しください。", AppProfile.ShortTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
+            MessageBox.Show(this, Loc.Get("About_CannotCopy"), AppProfile.ShortTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
         }
     }
 }

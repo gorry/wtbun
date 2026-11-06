@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  画面の文言（英語。どの言語にも当てはまらないときもこれを使う）。キーは Strings.ja.resx と同じにする。
+  {0} などは実行時に入る値。comment は翻訳する人への説明。
+-->
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Common_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Common_Close" xml:space="preserve">
+    <value>Close</value>
+    <comment>Button and menu item that closes a dialog or a project.</comment>
+  </data>
+  <data name="Common_OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="Main_MoveLeft" xml:space="preserve">
+    <value>Move left</value>
+    <comment>Tab context menu. Moves the project tab one position to the left.</comment>
+  </data>
+  <data name="Main_MoveRight" xml:space="preserve">
+    <value>Move right</value>
+    <comment>Tab context menu.</comment>
+  </data>
+  <data name="Main_EditConfig" xml:space="preserve">
+    <value>Edit project configuration…</value>
+    <comment>Tab context menu. Opens a dialog.</comment>
+  </data>
+  <data name="Main_Reopen" xml:space="preserve">
+    <value>Reopen project</value>
+    <comment>Tab context menu. Closes the project window and opens it again with the current configuration file.</comment>
+  </data>
+  <data name="Main_OpenProject" xml:space="preserve">
+    <value>Open project</value>
+    <comment>Tooltip of the "+" button.</comment>
+  </data>
+  <data name="Main_SelectFolder" xml:space="preserve">
+    <value>Select folder…</value>
+    <comment>Menu of the "+" button.</comment>
+  </data>
+  <data name="Main_History" xml:space="preserve">
+    <value>History</value>
+    <comment>Menu of the "+" button. Submenu with recently opened folders.</comment>
+  </data>
+  <data name="Main_ClearHistory" xml:space="preserve">
+    <value>Clear history…</value>
+    <comment>Menu of the "+" button.</comment>
+  </data>
+  <data name="Main_Menu" xml:space="preserve">
+    <value>Menu</value>
+    <comment>Tooltip of the "≡" button.</comment>
+  </data>
+  <data name="Main_ShowInTaskbar" xml:space="preserve">
+    <value>Show terminals on the taskbar</value>
+    <comment>Checkable menu item.</comment>
+  </data>
+  <data name="Main_Settings" xml:space="preserve">
+    <value>Settings…</value>
+    <comment>Opens the settings dialog.</comment>
+  </data>
+  <data name="Main_About" xml:space="preserve">
+    <value>About {0}…</value>
+    <comment>{0} is the app short name (wtbun).</comment>
+  </data>
+  <data name="Main_Exit" xml:space="preserve">
+    <value>Exit {0}</value>
+    <comment>{0} is the app short name (wtbun).</comment>
+  </data>
+  <data name="Main_MissingProjects" xml:space="preserve">
+    <value>The folders of the following projects were not found.</value>
+    <comment>Followed by a list of folder paths.</comment>
+  </data>
+  <data name="Main_SelectProjectFolder" xml:space="preserve">
+    <value>Select project folder</value>
+    <comment>Title of the folder picker.</comment>
+  </data>
+  <data name="Main_FolderNotFound" xml:space="preserve">
+    <value>The folder was not found.</value>
+    <comment>Followed by the folder path.</comment>
+  </data>
+  <data name="Main_CannotOpenWindow" xml:space="preserve">
+    <value>Couldn't open the terminal window. Try again.</value>
+  </data>
+  <data name="Main_CannotStartTerminal" xml:space="preserve">
+    <value>Couldn't start Windows Terminal. Make sure it's installed.</value>
+  </data>
+  <data name="Main_ConfirmReopen" xml:space="preserve">
+    <value>Reopen "{0}"? Running commands will end.</value>
+    <comment>{0} is the project name.</comment>
+  </data>
+  <data name="Main_ConfirmClose" xml:space="preserve">
+    <value>Close "{0}"? Running commands will end.</value>
+    <comment>{0} is the project name.</comment>
+  </data>
+  <data name="Main_TerminalCloseHint" xml:space="preserve">
+    <value>If you don't need the Windows Terminal confirmation, turn off "Warn when closing more than one tab" under Interaction in its settings.</value>
+    <comment>Names of Windows Terminal settings. Use the wording of Windows Terminal in this language.</comment>
+  </data>
+  <data name="ConfigError_Line" xml:space="preserve">
+    <value>Line {1} of {0} is invalid.</value>
+    <comment>{0} is the configuration file name (.wtbun.toml). {1} is a line number.</comment>
+  </data>
+  <data name="ConfigError_Syntax" xml:space="preserve">
+    <value>{0} is not written correctly.</value>
+    <comment>{0} is the configuration file name.</comment>
+  </data>
+  <data name="ConfigError_KeyBeforeTabs" xml:space="preserve">
+    <value>Write "{1}" before the first [[tabs]] in {0}.</value>
+    <comment>{0} is the file name. {1} is a key name.</comment>
+  </data>
+  <data name="ConfigError_UnknownKey" xml:space="preserve">
+    <value>"{1}" can't be used in {0}.</value>
+    <comment>{0} is the file name. {1} is a key name.</comment>
+  </data>
+  <data name="ConfigError_TabColor" xml:space="preserve">
+    <value>"tab_color" in {0} is invalid. Use the '#RRGGBB' format.</value>
+    <comment>{0} is the file name.</comment>
+  </data>
+  <data name="ConfigError_Split" xml:space="preserve">
+    <value>"split" in {0} is invalid. Use 'right' or 'down'.</value>
+    <comment>{0} is the file name.</comment>
+  </data>
+  <data name="ConfigError_Size" xml:space="preserve">
+    <value>"size" in {0} is invalid. Use a number greater than 0 and less than 1.</value>
+    <comment>{0} is the file name.</comment>
+  </data>
+  <data name="ConfigError_Selected" xml:space="preserve">
+    <value>{0} has too many "selected = true". Select only one tab, and only one pane in each tab.</value>
+    <comment>{0} is the file name.</comment>
+  </data>
+  <data name="ConfigError_Panes" xml:space="preserve">
+    <value>"panes" in {0} is invalid. Write it as [[tabs.panes]].</value>
+    <comment>{0} is the file name.</comment>
+  </data>
+  <data name="ConfigError_Value" xml:space="preserve">
+    <value>"{1}" in {0} is invalid.</value>
+    <comment>{0} is the file name. {1} is a key name.</comment>
+  </data>
+  <data name="ConfigError_Access" xml:space="preserve">
+    <value>Couldn't read or write {0}. Check the access permissions.</value>
+    <comment>{0} is the file name.</comment>
+  </data>
+  <data name="About_Title" xml:space="preserve">
+    <value>About {0}</value>
+    <comment>Dialog title. {0} is the app short name.</comment>
+  </data>
+  <data name="About_AppName" xml:space="preserve">
+    <value>{0} ({1})</value>
+    <comment>{0} is the app name, {1} is its short name.</comment>
+  </data>
+  <data name="About_Version" xml:space="preserve">
+    <value>Version {0}</value>
+  </data>
+  <data name="About_ShowLatest" xml:space="preserve">
+    <value>Show the latest version on the web</value>
+    <comment>Link below the NOTICE text.</comment>
+  </data>
+  <data name="About_CopyVersion" xml:space="preserve">
+    <value>Copy version info</value>
+    <comment>Button.</comment>
+  </data>
+  <data name="About_CannotOpenBrowser" xml:space="preserve">
+    <value>Couldn't open the browser.</value>
+  </data>
+  <data name="About_CannotCopy" xml:space="preserve">
+    <value>Couldn't copy. Try again.</value>
+  </data>
+  <data name="AlreadyOpen_Message" xml:space="preserve">
+    <value>"{0}" is already open.</value>
+    <comment>{0} is the project name.</comment>
+  </data>
+  <data name="AlreadyOpen_Hint" xml:space="preserve">
+    <value>Reopening reloads the configuration file and opens the window again. Running commands will end.</value>
+  </data>
+  <data name="AlreadyOpen_Reopen" xml:space="preserve">
+    <value>Reopen</value>
+    <comment>Button.</comment>
+  </data>
+  <data name="AlreadyOpen_Activate" xml:space="preserve">
+    <value>Bring to front</value>
+    <comment>Button. Only switches to the open window.</comment>
+  </data>
+  <data name="App_NoDataDir" xml:space="preserve">
+    <value>No data folder is specified. Specify a folder after {0}.</value>
+    <comment>{0} is the command-line option (--data-dir).</comment>
+  </data>
+  <data name="App_BadLanguage" xml:space="preserve">
+    <value>The language is invalid. Specify one of the following after {0}: {1}</value>
+    <comment>{0} is the command-line option (--lang). {1} is a list such as "en-US, ja-JP".</comment>
+  </data>
+  <data name="ClearHistory_Title" xml:space="preserve">
+    <value>Clear history - {0}</value>
+    <comment>{0} is the app short name.</comment>
+  </data>
+  <data name="ClearHistory_Prompt" xml:space="preserve">
+    <value>Select the folders to clear.</value>
+  </data>
+  <data name="ClearHistory_Unusable" xml:space="preserve">
+    <value>Invalid folders ({0})</value>
+    <comment>{0} is a count.</comment>
+  </data>
+  <data name="ClearHistory_UnusableHint" xml:space="preserve">
+    <value>Folders that no longer exist or no longer have a configuration file.</value>
+  </data>
+  <data name="ClearHistory_All" xml:space="preserve">
+    <value>All folders ({0})</value>
+    <comment>{0} is a count.</comment>
+  </data>
+  <data name="ClearHistory_Clear" xml:space="preserve">
+    <value>Clear</value>
+    <comment>Button.</comment>
+  </data>
+  <data name="Settings_Title" xml:space="preserve">
+    <value>Settings - {0}</value>
+    <comment>{0} is the app short name.</comment>
+  </data>
+  <data name="Settings_Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="Config_Title" xml:space="preserve">
+    <value>Project configuration - {0}</value>
+    <comment>{0} is the project name.</comment>
+  </data>
+  <data name="Config_ProjectName" xml:space="preserve">
+    <value>Project name</value>
+  </data>
+  <data name="Config_ProjectNameHint" xml:space="preserve">
+    <value>If empty, the folder name is shown.</value>
+  </data>
+  <data name="Config_Icon" xml:space="preserve">
+    <value>Icon</value>
+  </data>
+  <data name="Config_Import" xml:space="preserve">
+    <value>Import…</value>
+    <comment>Button. Opens a file picker for the icon image.</comment>
+  </data>
+  <data name="Config_IconHintCrop" xml:space="preserve">
+    <value>The center of the image is cropped to a square.</value>
+  </data>
+  <data name="Config_IconHintIco" xml:space="preserve">
+    <value>{0} is in the folder, so the tab shows that icon instead.</value>
+    <comment>{0} is a file name (.wtbun.ico).</comment>
+  </data>
+  <data name="Config_IconHintSave" xml:space="preserve">
+    <value>The tab icon changes when you save.</value>
+  </data>
+  <data name="Config_TabsAndPanes" xml:space="preserve">
+    <value>Tabs and panes to open</value>
+  </data>
+  <data name="Config_TabList" xml:space="preserve">
+    <value>Tabs to open</value>
+    <comment>Accessible name of the list.</comment>
+  </data>
+  <data name="Config_Duplicate" xml:space="preserve">
+    <value>Duplicate</value>
+    <comment>Button.</comment>
+  </data>
+  <data name="Config_Remove" xml:space="preserve">
+    <value>Delete</value>
+    <comment>Button.</comment>
+  </data>
+  <data name="Config_MoveUp" xml:space="preserve">
+    <value>Up</value>
+    <comment>Button. Moves the selected item up.</comment>
+  </data>
+  <data name="Config_MoveDown" xml:space="preserve">
+    <value>Down</value>
+    <comment>Button.</comment>
+  </data>
+  <data name="Config_AddTab" xml:space="preserve">
+    <value>Add tab</value>
+    <comment>Button.</comment>
+  </data>
+  <data name="Config_AddPane" xml:space="preserve">
+    <value>Add pane</value>
+    <comment>Button.</comment>
+  </data>
+  <data name="Config_PaneHeader" xml:space="preserve">
+    <value>  └ {0}</value>
+    <comment>List item of a pane, indented under its tab. {0} is the pane title.</comment>
+  </data>
+  <data name="Config_UnnamedPane" xml:space="preserve">
+    <value>(pane)</value>
+    <comment>Shown when a pane has no title.</comment>
+  </data>
+  <data name="Config_Untitled" xml:space="preserve">
+    <value>(untitled)</value>
+    <comment>Shown when a tab has no title.</comment>
+  </data>
+  <data name="Config_SelectTabOnOpen" xml:space="preserve">
+    <value>Select this tab when opened</value>
+    <comment>Check box.</comment>
+  </data>
+  <data name="Config_SelectPaneOnOpen" xml:space="preserve">
+    <value>Select this pane when opened</value>
+    <comment>Check box.</comment>
+  </data>
+  <data name="Config_SelectTabHint" xml:space="preserve">
+    <value>If no tab is selected, the last tab is selected.</value>
+  </data>
+  <data name="Config_SelectPaneHint" xml:space="preserve">
+    <value>If no pane is selected, the first pane (the tab row) is selected.</value>
+  </data>
+  <data name="Config_SplitDirection" xml:space="preserve">
+    <value>Split direction</value>
+  </data>
+  <data name="Config_SplitAuto" xml:space="preserve">
+    <value>Auto</value>
+  </data>
+  <data name="Config_SplitRight" xml:space="preserve">
+    <value>Split right</value>
+  </data>
+  <data name="Config_SplitDown" xml:space="preserve">
+    <value>Split down</value>
+  </data>
+  <data name="Config_SplitHint" xml:space="preserve">
+    <value>Splits the previous pane. Auto chooses by the width and height of the pane.</value>
+  </data>
+  <data name="Config_Size" xml:space="preserve">
+    <value>Size (%)</value>
+  </data>
+  <data name="Config_SizeName" xml:space="preserve">
+    <value>Size</value>
+    <comment>Accessible name of the text box.</comment>
+  </data>
+  <data name="Config_SizeHint" xml:space="preserve">
+    <value>Size relative to the pane before splitting. If empty, half.</value>
+  </data>
+  <data name="Config_DuplicatePane" xml:space="preserve">
+    <value>Duplicate the previous pane</value>
+    <comment>Check box.</comment>
+  </data>
+  <data name="Config_DuplicatePaneHint" xml:space="preserve">
+    <value>Opens with the same profile and folder as the previous pane.</value>
+  </data>
+  <data name="Config_TabTitle" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="Config_TabTitleHint" xml:space="preserve">
+    <value>If empty, Windows Terminal sets the title.</value>
+  </data>
+  <data name="Config_StartFolder" xml:space="preserve">
+    <value>Starting folder</value>
+  </data>
+  <data name="Config_Browse" xml:space="preserve">
+    <value>Browse…</value>
+    <comment>Button.</comment>
+  </data>
+  <data name="Config_StartFolderHint" xml:space="preserve">
+    <value>If empty, the project folder is used. Relative paths can be used.</value>
+  </data>
+  <data name="Config_SelectStartFolder" xml:space="preserve">
+    <value>Select starting folder</value>
+    <comment>Title of the folder picker.</comment>
+  </data>
+  <data name="Config_Profile" xml:space="preserve">
+    <value>Profile</value>
+    <comment>Windows Terminal profile.</comment>
+  </data>
+  <data name="Config_ProfileHint" xml:space="preserve">
+    <value>If empty, the default profile is used.</value>
+  </data>
+  <data name="Config_Command" xml:space="preserve">
+    <value>Command</value>
+  </data>
+  <data name="Config_CommandHint" xml:space="preserve">
+    <value>The tab closes when the command ends. If empty, the profile setting is used.</value>
+  </data>
+  <data name="Config_Append" xml:space="preserve">
+    <value>Append the command to the profile's command line</value>
+    <comment>Check box.</comment>
+  </data>
+  <data name="Config_AppendHint" xml:space="preserve">
+    <value>In Command, enter the arguments to pass to the profile's command.</value>
+  </data>
+  <data name="Config_TabColor" xml:space="preserve">
+    <value>Tab color</value>
+  </data>
+  <data name="Config_TabColorHint" xml:space="preserve">
+    <value>Enter in #RRGGBB format (for example, #2E7D32). If empty, the profile setting is used.</value>
+  </data>
+  <data name="Config_ColorScheme" xml:space="preserve">
+    <value>Color scheme</value>
+  </data>
+  <data name="Config_FollowProfileHint" xml:space="preserve">
+    <value>If empty, the profile setting is used.</value>
+  </data>
+  <data name="Config_TitleChange" xml:space="preserve">
+    <value>Title changes by programs</value>
+    <comment>Whether programs running in the terminal can change the tab title.</comment>
+  </data>
+  <data name="Config_FollowProfile" xml:space="preserve">
+    <value>Use profile setting</value>
+  </data>
+  <data name="Config_Allow" xml:space="preserve">
+    <value>Allow</value>
+  </data>
+  <data name="Config_Deny" xml:space="preserve">
+    <value>Don't allow</value>
+  </data>
+  <data name="Config_Environment" xml:space="preserve">
+    <value>Environment variables</value>
+  </data>
+  <data name="Config_EnvDefault" xml:space="preserve">
+    <value>Default</value>
+  </data>
+  <data name="Config_EnvInherit" xml:space="preserve">
+    <value>Inherit from Windows Terminal</value>
+  </data>
+  <data name="Config_EnvReload" xml:space="preserve">
+    <value>Load fresh</value>
+    <comment>Load the environment variables again instead of inheriting them.</comment>
+  </data>
+  <data name="Config_EnvHint" xml:space="preserve">
+    <value>By default, they are inherited when a command is specified.</value>
+  </data>
+  <data name="Config_ApplyNote" xml:space="preserve">
+    <value>Changes to tabs and panes take effect the next time the project is opened.</value>
+  </data>
+  <data name="Config_Save" xml:space="preserve">
+    <value>Save</value>
+    <comment>Button.</comment>
+  </data>
+  <data name="Config_SelectIconImage" xml:space="preserve">
+    <value>Select icon image</value>
+    <comment>Title of the file picker.</comment>
+  </data>
+  <data name="Config_ImageFiles" xml:space="preserve">
+    <value>Image files</value>
+    <comment>File type in the file picker.</comment>
+  </data>
+  <data name="Config_AllFiles" xml:space="preserve">
+    <value>All files</value>
+    <comment>File type in the file picker.</comment>
+  </data>
+  <data name="Config_CannotLoadImage" xml:space="preserve">
+    <value>Couldn't load the image. Select another file.</value>
+  </data>
+  <data name="Config_InvalidColor" xml:space="preserve">
+    <value>The tab color of "{0}" is invalid. Enter it in #RRGGBB format.</value>
+    <comment>{0} is a tab or pane title.</comment>
+  </data>
+  <data name="Config_InvalidSize" xml:space="preserve">
+    <value>The size of "{0}" is invalid. Enter a number from 1 to 99.</value>
+    <comment>{0} is a pane title.</comment>
+  </data>
+  <data name="Config_ChangedElsewhere" xml:space="preserve">
+    <value>{0} was changed elsewhere. Open this dialog again.</value>
+    <comment>{0} is the file name.</comment>
+  </data>
+  <data name="Config_NotEditable" xml:space="preserve">
+    <value>This {0} can't be saved here. Edit the file directly.</value>
+    <comment>{0} is the file name.</comment>
+  </data>
+  <data name="Config_CannotSave" xml:space="preserve">
+    <value>Couldn't save {0}. Check the access permissions.</value>
+    <comment>{0} is a file name.</comment>
+  </data>
+  <data name="Config_ConfirmLoseComments" xml:space="preserve">
+    <value>Some comments in {0} will be removed. Save anyway?</value>
+    <comment>{0} is the file name.</comment>
+  </data>
+</root>
