@@ -129,7 +129,7 @@ command = 'npm run dev'
 | `command` | タブで実行するコマンドライン。省略するとプロファイルの既定 |
 | `profile` | Windows Terminal のプロファイル名または GUID。省略すると既定のプロファイル |
 | `append_command_line` | `true` なら `command` をプロファイルのコマンドラインの後ろに付け足す（`--appendCommandLine`）。`command` がなければ付けない |
-| `tab_color` | タブの色。`#RGB` か `#RRGGBB`（`--tabColor`）。ほかの書き方は止める（`InvalidConfigValueException`。「.wtbun.toml の「tab_color」が正しくありません。'#RRGGBB' の形式で書いてください。」） |
+| `tab_color` | タブの色。`#RGB` か `#RRGGBB`（`--tabColor`）。ほかの書き方は止める（`InvalidConfigValueException`。「.wtbun.toml の「tab_color」が正しくありません。'#RRGGBB' か '#RGB' の形式で書いてください。」） |
 | `color_scheme` | 配色の名前。プロファイルの配色の代わりに使う（`--colorScheme`）。名前は確かめない |
 | `suppress_application_title` | `true` なら `--suppressApplicationTitle`、`false` なら `--useApplicationTitle`。省略するとプロファイルの設定 |
 | `inherit_environment` | `true` なら `--inheritEnvironment`、`false` なら `--reloadEnvironment`。省略すると Windows Terminal の既定（コマンドラインがあれば引き継ぐ） |

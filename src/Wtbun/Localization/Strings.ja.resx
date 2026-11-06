@@ -100,7 +100,7 @@
     <value>{0} の「{1}」は使用できない項目です。</value>
   </data>
   <data name="ConfigError_TabColor" xml:space="preserve">
-    <value>{0} の「tab_color」が正しくありません。'#RRGGBB' の形式で書いてください。</value>
+    <value>{0} の「tab_color」が正しくありません。'#RRGGBB' か '#RGB' の形式で書いてください。</value>
   </data>
   <data name="ConfigError_Split" xml:space="preserve">
     <value>{0} の「split」が正しくありません。'right' か 'down' を書いてください。</value>

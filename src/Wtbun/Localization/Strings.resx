@@ -79,7 +79,7 @@
     <comment>{0} is the app short name (wtbun).</comment>
   </data>
   <data name="Main_MissingProjects" xml:space="preserve">
-    <value>The folders of the following projects were not found.</value>
+    <value>Couldn't find the folders for these projects:</value>
     <comment>Followed by a list of folder paths.</comment>
   </data>
   <data name="Main_SelectProjectFolder" xml:space="preserve">
@@ -87,7 +87,7 @@
     <comment>Title of the folder picker.</comment>
   </data>
   <data name="Main_FolderNotFound" xml:space="preserve">
-    <value>The folder was not found.</value>
+    <value>Couldn't find this folder:</value>
     <comment>Followed by the folder path.</comment>
   </data>
   <data name="Main_CannotOpenWindow" xml:space="preserve">
@@ -105,7 +105,7 @@
     <comment>{0} is the project name.</comment>
   </data>
   <data name="Main_TerminalCloseHint" xml:space="preserve">
-    <value>If you don't need the Windows Terminal confirmation, turn off "Warn when closing more than one tab" under Interaction in its settings.</value>
+    <value>To stop Windows Terminal from asking, turn off "Warn when closing more than one tab" under Interaction in its settings.</value>
     <comment>Names of Windows Terminal settings. Use the wording of Windows Terminal in this language.</comment>
   </data>
   <data name="ConfigError_Line" xml:space="preserve">
@@ -113,19 +113,19 @@
     <comment>{0} is the configuration file name (.wtbun.toml). {1} is a line number.</comment>
   </data>
   <data name="ConfigError_Syntax" xml:space="preserve">
-    <value>{0} is not written correctly.</value>
+    <value>{0} isn't formatted correctly.</value>
     <comment>{0} is the configuration file name.</comment>
   </data>
   <data name="ConfigError_KeyBeforeTabs" xml:space="preserve">
-    <value>Write "{1}" before the first [[tabs]] in {0}.</value>
+    <value>Move "{1}" above the first [[tabs]] in {0}.</value>
     <comment>{0} is the file name. {1} is a key name.</comment>
   </data>
   <data name="ConfigError_UnknownKey" xml:space="preserve">
-    <value>"{1}" can't be used in {0}.</value>
+    <value>"{1}" isn't a valid key in {0}. Check the spelling.</value>
     <comment>{0} is the file name. {1} is a key name.</comment>
   </data>
   <data name="ConfigError_TabColor" xml:space="preserve">
-    <value>"tab_color" in {0} is invalid. Use the '#RRGGBB' format.</value>
+    <value>"tab_color" in {0} is invalid. Use '#RRGGBB' or '#RGB'.</value>
     <comment>{0} is the file name.</comment>
   </data>
   <data name="ConfigError_Split" xml:space="preserve">
@@ -137,7 +137,7 @@
     <comment>{0} is the file name.</comment>
   </data>
   <data name="ConfigError_Selected" xml:space="preserve">
-    <value>{0} has too many "selected = true". Select only one tab, and only one pane in each tab.</value>
+    <value>{0} has more than one "selected = true". Select only one tab, and only one pane per tab.</value>
     <comment>{0} is the file name.</comment>
   </data>
   <data name="ConfigError_Panes" xml:space="preserve">
@@ -164,7 +164,7 @@
     <value>Version {0}</value>
   </data>
   <data name="About_ShowLatest" xml:space="preserve">
-    <value>Show the latest version on the web</value>
+    <value>View the latest NOTICE online</value>
     <comment>Link below the NOTICE text.</comment>
   </data>
   <data name="About_CopyVersion" xml:space="preserve">
@@ -197,7 +197,7 @@
     <comment>{0} is the command-line option (--data-dir).</comment>
   </data>
   <data name="App_BadLanguage" xml:space="preserve">
-    <value>The language is invalid. Specify one of the following after {0}: {1}</value>
+    <value>Unsupported language. Specify one of the following after {0}: {1}</value>
     <comment>{0} is the command-line option (--lang). {1} is a list such as "en-US, ja-JP".</comment>
   </data>
   <data name="ClearHistory_Title" xml:space="preserve">
@@ -205,10 +205,10 @@
     <comment>{0} is the app short name.</comment>
   </data>
   <data name="ClearHistory_Prompt" xml:space="preserve">
-    <value>Select the folders to clear.</value>
+    <value>Choose which folders to remove from the history.</value>
   </data>
   <data name="ClearHistory_Unusable" xml:space="preserve">
-    <value>Invalid folders ({0})</value>
+    <value>Unavailable folders ({0})</value>
     <comment>{0} is a count.</comment>
   </data>
   <data name="ClearHistory_UnusableHint" xml:space="preserve">
@@ -268,7 +268,7 @@
     <comment>Button.</comment>
   </data>
   <data name="Config_Remove" xml:space="preserve">
-    <value>Delete</value>
+    <value>Remove</value>
     <comment>Button.</comment>
   </data>
   <data name="Config_MoveUp" xml:space="preserve">
@@ -311,7 +311,7 @@
     <value>If no tab is selected, the last tab is selected.</value>
   </data>
   <data name="Config_SelectPaneHint" xml:space="preserve">
-    <value>If no pane is selected, the first pane (the tab row) is selected.</value>
+    <value>If no pane is selected, the tab's first pane is selected.</value>
   </data>
   <data name="Config_SplitDirection" xml:space="preserve">
     <value>Split direction</value>
@@ -326,7 +326,7 @@
     <value>Split down</value>
   </data>
   <data name="Config_SplitHint" xml:space="preserve">
-    <value>Splits the previous pane. Auto chooses by the width and height of the pane.</value>
+    <value>Splits the previous pane. Auto picks the direction based on the pane's width and height.</value>
   </data>
   <data name="Config_Size" xml:space="preserve">
     <value>Size (%)</value>
@@ -336,7 +336,7 @@
     <comment>Accessible name of the text box.</comment>
   </data>
   <data name="Config_SizeHint" xml:space="preserve">
-    <value>Size relative to the pane before splitting. If empty, half.</value>
+    <value>Percentage of the pane being split. If empty, 50%.</value>
   </data>
   <data name="Config_DuplicatePane" xml:space="preserve">
     <value>Duplicate the previous pane</value>
@@ -352,7 +352,7 @@
     <value>If empty, Windows Terminal sets the title.</value>
   </data>
   <data name="Config_StartFolder" xml:space="preserve">
-    <value>Starting folder</value>
+    <value>Starting directory</value>
   </data>
   <data name="Config_Browse" xml:space="preserve">
     <value>Browse…</value>
@@ -362,7 +362,7 @@
     <value>If empty, the project folder is used. Relative paths can be used.</value>
   </data>
   <data name="Config_SelectStartFolder" xml:space="preserve">
-    <value>Select starting folder</value>
+    <value>Select starting directory</value>
     <comment>Title of the folder picker.</comment>
   </data>
   <data name="Config_Profile" xml:space="preserve">
@@ -420,11 +420,11 @@
     <value>Inherit from Windows Terminal</value>
   </data>
   <data name="Config_EnvReload" xml:space="preserve">
-    <value>Load fresh</value>
+    <value>Reload from Windows</value>
     <comment>Load the environment variables again instead of inheriting them.</comment>
   </data>
   <data name="Config_EnvHint" xml:space="preserve">
-    <value>By default, they are inherited when a command is specified.</value>
+    <value>By default, they're inherited only when a command is set.</value>
   </data>
   <data name="Config_ApplyNote" xml:space="preserve">
     <value>Changes to tabs and panes take effect the next time the project is opened.</value>
@@ -457,11 +457,11 @@
     <comment>{0} is a pane title.</comment>
   </data>
   <data name="Config_ChangedElsewhere" xml:space="preserve">
-    <value>{0} was changed elsewhere. Open this dialog again.</value>
+    <value>{0} was changed by another program. Close and reopen this dialog.</value>
     <comment>{0} is the file name.</comment>
   </data>
   <data name="Config_NotEditable" xml:space="preserve">
-    <value>This {0} can't be saved here. Edit the file directly.</value>
+    <value>This {0} can't be edited here because of how it's written. Edit the file directly.</value>
     <comment>{0} is the file name.</comment>
   </data>
   <data name="Config_CannotSave" xml:space="preserve">

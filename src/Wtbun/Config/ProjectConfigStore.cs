@@ -279,7 +279,7 @@ public static class ProjectConfigStore
         # Write the tabs to open, each starting with a [[tabs]] line. They open from top to bottom.
         # You can set the following keys. All of them are optional.
         #   title   - Tab title. If omitted, Windows Terminal sets it.
-        #   dir     - Starting folder. Relative paths are relative to the folder of this file.
+        #   dir     - Starting directory. Relative paths are relative to the folder of this file.
         #              If omitted, the folder of this file is used.
         #   profile - Windows Terminal profile name. If omitted, the default profile is used.
         #   command - Command to run. If omitted, the profile setting is used.
