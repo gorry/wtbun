@@ -188,7 +188,7 @@ command = 'npm run dev'
 - プロファイルは、Windows Terminal の設定ファイルにある名前（隠しているものを除く）を候補に出す。手でも入力できる。読めなければ候補なし
 - タブごとに、ほかの項目も編集する
   - 「コマンドをプロファイルのコマンドの後ろに追加」（`append_command_line`）：チェックを外すと項目を書かない。ファイルに `false` と書いてあれば、チェックを変えない限り残す
-  - 「タブの色」（`tab_color`）：入力欄の右に色の見本を出す。正しくない書き方のまま保存すると「「（タブ）」のタブの色が正しくありません。#RRGGBB の形式で入力してください。」と出し、そのタブを選ぶ
+  - 「タブの色」（`tab_color`）：入力欄の右に色の見本を出す。正しくない書き方のまま保存すると「「（タブ）」のタブの色が正しくありません。#RRGGBB か #RGB の形式で入力してください。」と出し、そのタブを選ぶ
   - 「配色」（`color_scheme`）：Windows Terminal に最初からある配色（1.24 の defaults.json にある 14 個。`TerminalSettings.BuiltInColorSchemes`）と、設定ファイルの `schemes` の名前を候補に出す。手でも入力できる
   - 「プログラムによるタイトルの変更」（`suppress_application_title`）：プロファイルの設定に従う（書かない）・許可する（`false`）・許可しない（`true`）
   - 「環境変数」（`inherit_environment`）：既定（書かない）・Windows Terminal から引き継ぐ（`true`）・新しく読み込む（`false`）

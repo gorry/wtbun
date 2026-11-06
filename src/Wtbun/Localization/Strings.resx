@@ -121,7 +121,7 @@
     <comment>{0} is the file name. {1} is a key name.</comment>
   </data>
   <data name="ConfigError_UnknownKey" xml:space="preserve">
-    <value>"{1}" isn't a valid key in {0}. Check the spelling.</value>
+    <value>"{1}" isn't valid in {0}. Check the spelling and where it's written.</value>
     <comment>{0} is the file name. {1} is a key name.</comment>
   </data>
   <data name="ConfigError_TabColor" xml:space="preserve">
@@ -389,7 +389,7 @@
     <value>Tab color</value>
   </data>
   <data name="Config_TabColorHint" xml:space="preserve">
-    <value>Enter in #RRGGBB format (for example, #2E7D32). If empty, the profile setting is used.</value>
+    <value>Enter in #RRGGBB or #RGB format (for example, #2E7D32). If empty, the profile setting is used.</value>
   </data>
   <data name="Config_ColorScheme" xml:space="preserve">
     <value>Color scheme</value>
@@ -449,7 +449,7 @@
     <value>Couldn't load the image. Select another file.</value>
   </data>
   <data name="Config_InvalidColor" xml:space="preserve">
-    <value>The tab color of "{0}" is invalid. Enter it in #RRGGBB format.</value>
+    <value>The tab color of "{0}" is invalid. Enter it in #RRGGBB or #RGB format.</value>
     <comment>{0} is a tab or pane title.</comment>
   </data>
   <data name="Config_InvalidSize" xml:space="preserve">

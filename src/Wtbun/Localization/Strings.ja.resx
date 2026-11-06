@@ -322,7 +322,7 @@
     <value>タブの色</value>
   </data>
   <data name="Config_TabColorHint" xml:space="preserve">
-    <value>#RRGGBB の形式で入力します（例：#2E7D32）。空欄の場合はプロファイルの設定に従います。</value>
+    <value>#RRGGBB か #RGB の形式で入力します（例：#2E7D32）。空欄の場合はプロファイルの設定に従います。</value>
   </data>
   <data name="Config_ColorScheme" xml:space="preserve">
     <value>配色</value>
@@ -376,7 +376,7 @@
     <value>画像を読み込めません。別のファイルを選択してください。</value>
   </data>
   <data name="Config_InvalidColor" xml:space="preserve">
-    <value>「{0}」のタブの色が正しくありません。#RRGGBB の形式で入力してください。</value>
+    <value>「{0}」のタブの色が正しくありません。#RRGGBB か #RGB の形式で入力してください。</value>
   </data>
   <data name="Config_InvalidSize" xml:space="preserve">
     <value>「{0}」のサイズが正しくありません。1 から 99 までの数を入力してください。</value>
