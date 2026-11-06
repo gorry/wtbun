@@ -1,5 +1,7 @@
 # wtbun - Windows Terminal Bundler
 
+<img src="wtbun.png" align="right" width="400" alt="スクリーンショット">
+
 日本語 | [English](README.en.md)
 
 ## これはなに？
