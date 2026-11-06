@@ -15,10 +15,13 @@
     <ProfileCopyright>$([System.Text.RegularExpressions.Regex]::Replace($(_ProfileIni), '(?sm)\A.*?^\[Copyright\]\r?%24(?:(?!^\[).)*?^Text=([^\r\n]*).*\z', '$1'))</ProfileCopyright>
     <ProfileAuthor>$([System.Text.RegularExpressions.Regex]::Replace($(_ProfileIni), '(?sm)\A.*?^\[Copyright\]\r?%24(?:(?!^\[).)*?^Name=([^\r\n]*).*\z', '$1'))</ProfileAuthor>
     <ProfileProjectUrl>$([System.Text.RegularExpressions.Regex]::Replace($(_ProfileIni), '(?sm)\A.*?^\[URL\]\r?%24(?:(?!^\[).)*?^Project=([^\r\n]*).*\z', '$1'))</ProfileProjectUrl>
+    <ProfileReleaseUrl>$([System.Text.RegularExpressions.Regex]::Replace($(_ProfileIni), '(?sm)\A.*?^\[URL\]\r?%24(?:(?!^\[).)*?^Release=([^\r\n]*).*\z', '$1'))</ProfileReleaseUrl>
     <ProfileNoticeUrl>$([System.Text.RegularExpressions.Regex]::Replace($(_ProfileIni), '(?sm)\A.*?^\[URL\]\r?%24(?:(?!^\[).)*?^Notice=([^\r\n]*).*\z', '$1'))</ProfileNoticeUrl>
 
     <!-- 実行ファイルのバージョン情報 -->
     <Version>$(ProfileVersion.Trim())</Version>
+    <!-- 製品バージョンを Profile.ini の値だけにする（.NET SDK は既定で「+コミットのハッシュ」を付ける） -->
+    <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
     <Product>$(ProfileTitle.Trim())</Product>
     <AssemblyTitle>$(ProfileTitle.Trim())</AssemblyTitle>
     <Copyright>$(ProfileCopyright.Trim())</Copyright>

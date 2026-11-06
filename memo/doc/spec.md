@@ -73,11 +73,11 @@ wtbun の機能の詳細。方針と理由は [design.md](design.md)。
   - プロジェクトがないときは、最後の位置にとどまる（最初は画面の中央）
 - 右端の「≡」から「wtbun を終了」（「終了と復元」を参照）
 - 「≡」の「wtbun について…」で、アプリの情報のダイアログ（`AboutWindow`。題名は「wtbun について」）を、タブ列の真下に出す。ダイアログを出すメニューなので、末尾に「…」を付ける
-  - アプリのアイコン、アプリ名（[Title] Text と ShortText）、バージョン（[Version] Text）、著作権表示（[Copyright] Text と Name）、プロジェクトの URL（[URL] Project。クリックすると既定のブラウザーで開く）
+  - アプリのアイコン、アプリ名（[Title] Text と ShortText）、バージョン（[Version] Text）、著作権表示（[Copyright] Text と Name）、リリースのページの URL（[URL] Release。新しいバージョンを探せるように。クリックすると既定のブラウザーで開く）
   - 「NOTICE」「LICENSE」のタブで、リポジトリ直下の `NOTICE`・`LICENSE` の本文を出す。ネットにつながっていなくても読めるよう、ビルドのときに exe に入れる（`EmbeddedResource`）。等幅で折り返さない。タブを切り替えてもウィンドウの高さは変えない
   - NOTICE のタブの下に「最新の内容を Web で表示」（[URL] Notice）
   - URL が Profile.ini にない（または http・https でない）ときは、そのリンクを出さない。ブラウザーを開けなければ「ブラウザーを開けません。」
-  - 「バージョン情報をコピー」で、`Windows Terminal Bundler (wtbun) 2026.1028.1` の形の 1 行をクリップボードに入れる（問い合わせのときに貼り付けられるように）。ほかのアプリがクリップボードを使っていてコピーできなければ「コピーできませんでした。もう一度お試しください。」
+  - 「バージョン情報をコピー」で、`Windows Terminal Bundler (wtbun) 2026.1106.1` の形の 1 行をクリップボードに入れる（問い合わせのときに貼り付けられるように）。ほかのアプリがクリップボードを使っていてコピーできなければ「コピーできませんでした。もう一度お試しください。」
     - しくみ：Win32 の API（OpenClipboard・SetClipboardData）で、文字列をその場でクリップボードに置く（`ClipboardText.TrySet`）。開けなければ 0.05 秒おきに 10 回まで試す。WPF の `Clipboard.SetText` は使わない（design.md の「クリップボードへのコピー」）
   - 「閉じる」（Enter・Esc でも閉じる）
 
@@ -279,6 +279,17 @@ command = 'npm run dev'
 - `app.ico` はリソースとしても入れ、プロジェクトのアイコンがないときにタブに出す（`ProjectIcon.Default`）
 - `app.ico` はビルドでは作らない。`wtbun.icon.png` を変えたら、手で作り直す（例：Python の Pillow で `Image.open('wtbun.icon.png').save('src/Wtbun/app.ico', sizes=[(16,16),(20,20),(24,24),(32,32),(40,40),(48,48),(64,64),(256,256)])`）
 
+## リリース用パッケージ（release.cmd）
+- リポジトリ直下の `release.cmd` で作る。できるもの（どちらも `release/` の下。git には入れない）
+  - `release/（ShortText）_（Version）/`：リリース版の実行ファイル一式と、README.md・LICENSE・NOTICE
+  - `release/（ShortText）_（Version）.zip`：そのフォルダーごと固めたもの（展開するとフォルダーが 1 つできる）
+- 名前の（ShortText）は `Profile.ini` の [Title] ShortText、（Version）は [Version] Text。ビルドと同じ読み方にするため、`dotnet msbuild -getProperty` で `Directory.Build.props` のプロパティ（`ProfileShortTitle`・`Version`）を読む
+- 実行ファイルは `dotnet publish -c Release -p:DebugType=none` で作る（.pdb は入れない）。.NET 10 のランタイムを使う形（self-contained ではない）
+- `wtbunhook.dll` は `Wtbun.csproj` の `PublishHook` で発行先にコピーする。ビルドでは C++ ツールがなくても続けるが、パッケージでは必須とし、なければ止める
+- 同じ名前のフォルダー・zip があれば、消してから作り直す
+- zip は Windows の `tar.exe`（`%SystemRoot%\System32\tar.exe`）で作る。PATH に Git の tar（GNU tar）があると、`H:\…` のようなパスを接続先のホスト名と取り違えて失敗するため
+- 失敗したら終了コード 1
+
 ## アプリ名・バージョン（Profile.ini）
 リポジトリ直下の `Profile.ini` に、アプリ名などの定数がある。著作者だけが書き換え、プログラムからは読むだけ。
 
@@ -289,11 +300,12 @@ command = 'npm run dev'
 |---|---|
 | [Title] Text | 実行ファイルの製品名・説明、「wtbun について」のアプリ名（`AppProfile.Title`） |
 | [Title] ShortText | wtbun のウィンドウ名とタスクバーの名前、メッセージの題名、「≡」の「（略名） を終了」、構成ファイル名 `.（略名）.toml`、保存先 `%APPDATA%\（略名）\`、Windows Terminal のウィンドウ名の接頭辞（`AppProfile.ShortTitle`） |
-| [Version] Text | 実行ファイルのバージョン、「wtbun について」のバージョン（`AppProfile.Version`） |
+| [Version] Text | 実行ファイルのバージョン（製品バージョンにコミットのハッシュは付けない。`IncludeSourceRevisionInInformationalVersion`）、「wtbun について」のバージョン（`AppProfile.Version`） |
 | [Version] Number | `AppProfile.VersionNumber`（今は使っていない） |
 | [Copyright] Text | 実行ファイルの著作権表示、「wtbun について」の著作権表示（`AppProfile.Copyright`） |
 | [Copyright] Name | 実行ファイルの会社名、「wtbun について」の著作権表示の 2 行目（`AppProfile.Author`。なくてもよい） |
-| [URL] Project | 「wtbun について」のプロジェクトの URL（`AppProfile.ProjectUrl`。なくてもよい） |
+| [URL] Project | `AppProfile.ProjectUrl`（今は使っていない。なくてもよい） |
+| [URL] Release | 「wtbun について」のリリースのページの URL（`AppProfile.ReleaseUrl`。なくてもよい） |
 | [URL] Notice | 「wtbun について」の「最新の内容を Web で表示」（`AppProfile.NoticeUrl`。なくてもよい） |
 | [AppId] | 今は使っていない |
 

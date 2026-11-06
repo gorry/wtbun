@@ -27,8 +27,9 @@ public partial class AboutWindow : Window
             : $"{AppProfile.Copyright}\n{AppProfile.Author}";
 
         // Profile.ini に URL がなければ、その行は出さない
-        SetLink(ProjectLink, ProjectLinkLine, AppProfile.ProjectUrl);
-        ProjectLinkText.Text = AppProfile.ProjectUrl;
+        // 新しいバージョンを探せるよう、リリースのページを出す
+        SetLink(ProjectLink, ProjectLinkLine, AppProfile.ReleaseUrl);
+        ProjectLinkText.Text = AppProfile.ReleaseUrl;
         SetLink(NoticeLink, NoticeLinkLine, AppProfile.NoticeUrl);
 
         NoticeBox.Text = ReadResource("NOTICE");

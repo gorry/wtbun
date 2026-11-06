@@ -489,3 +489,9 @@ CLAUDE.local.md
 
 # このリポジトリで wtbun を使うときの構成ファイル（人ごとに違うので登録しない）
 .wtbun.toml
+
+# 手で作った控えのファイル
+*.bak
+
+# リリース用パッケージ（release.cmd で作る）
+/release/

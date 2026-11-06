@@ -19,6 +19,7 @@
       <ProfileSourceFile>$(IntermediateOutputPath)Profile.g.cs</ProfileSourceFile>
       <_OptionalProfileValue Condition="!$(ProfileAuthor.Contains('&#10;'))">$(ProfileAuthor.Trim())</_OptionalProfileValue>
       <_OptionalProjectUrl Condition="!$(ProfileProjectUrl.Contains('&#10;'))">$(ProfileProjectUrl.Trim())</_OptionalProjectUrl>
+      <_OptionalReleaseUrl Condition="!$(ProfileReleaseUrl.Contains('&#10;'))">$(ProfileReleaseUrl.Trim())</_OptionalReleaseUrl>
       <_OptionalNoticeUrl Condition="!$(ProfileNoticeUrl.Contains('&#10;'))">$(ProfileNoticeUrl.Trim())</_OptionalNoticeUrl>
       <_ProfileSource>
 // Profile.ini から Directory.Build.targets が作るファイル。手で直さない
@@ -34,7 +35,8 @@ public static class AppProfile
     public const string Copyright = """$(ProfileCopyright.Trim())"""%3B
     public const string Author = """$(_OptionalProfileValue)"""%3B
     public const string ProjectUrl = """$(_OptionalProjectUrl)"""%3B
-    public const string NoticeUrl = """$(_OptionalNoticeUrl)"""%3B
+    public const string ReleaseUrl = """$(_OptionalReleaseUrl)"""%3B
+    public const string NoticeUrl ="""$(_OptionalNoticeUrl)"""%3B
 }
 </_ProfileSource>
     </PropertyGroup>

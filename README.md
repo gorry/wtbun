@@ -17,8 +17,6 @@ Windows Terminal は、複数のターミナルをタブで 1 つのウィンド
 - [Windows Terminal](https://aka.ms/terminal)（1.24 で動作を確かめています）
 - [.NET 10 デスクトップ ランタイム](https://dotnet.microsoft.com/download/dotnet/10.0)
 
-今はビルド済みの配布物がないため、下の「手元で動かす（開発）」の手順でビルドしてください。
-
 ## 使い方
 
 ### プロジェクトを開く
@@ -58,7 +56,7 @@ Windows Terminal は、複数のターミナルをタブで 1 つのウィンド
 
 ### バージョン情報
 
-タブ列の右端の「≡」から「wtbun について…」を選ぶと、バージョン、著作権表示、プロジェクトの Web サイト、ライセンス（NOTICE・LICENSE）を確認できます。「バージョン情報をコピー」で、アプリ名とバージョンをコピーできます。
+タブ列の右端の「≡」から「wtbun について…」を選ぶと、バージョン、著作権表示、リリースのページ、ライセンス（NOTICE・LICENSE）を確認できます。「バージョン情報をコピー」で、アプリ名とバージョンをコピーできます。
 
 ## プロジェクトの構成ファイル
 
@@ -182,6 +180,12 @@ dotnet run --project src/Wtbun -- --data-dir C:\temp\wtbun-test
 
 ```sh
 dotnet build wtbun.slnx -c Release
+```
+
+配布用のパッケージは、リポジトリ直下の `release.cmd` で作ります。`release/wtbun_（バージョン）/` にリリース版の実行ファイルと README.md・LICENSE・NOTICE を入れ、そのフォルダーごと `release/wtbun_（バージョン）.zip` にまとめます。`wtbunhook.dll` も入れるので、Visual Studio の C++ ツールが必要です。
+
+```sh
+release.cmd
 ```
 
 ## 構成

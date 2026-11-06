@@ -40,4 +40,9 @@
     <Copy SourceFiles="$(HookDll)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" />
   </Target>
 
+  <!-- dotnet publish（release.cmd）でも、発行先に wtbunhook.dll を入れる -->
+  <Target Name="PublishHook" AfterTargets="Publish" Condition="Exists('$(HookDll)')">
+    <Copy SourceFiles="$(HookDll)" DestinationFolder="$(PublishDir)" SkipUnchangedFiles="true" />
+  </Target>
+
 </Project>
