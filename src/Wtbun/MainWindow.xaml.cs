@@ -329,7 +329,8 @@ public partial class MainWindow : Window
         _exitReady = true;
         // 閉じるウィンドウがなかったときは、ここまで待たずに来るので、まだ OnClosing の中にいる。
         // その中で Close を呼んでも無視されるので、OnClosing を抜けてから閉じ直す
-        Dispatcher.BeginInvoke(Close);
+        // 閉じ終わるのは待たない（待つと OnClosing を抜けられない）
+        _ = Dispatcher.BeginInvoke(Close);
     }
 
     /// <summary>
