@@ -1,0 +1,150 @@
+﻿<Window x:Class="Wtbun.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Height="32" Width="640"
+        WindowStyle="None" ResizeMode="CanMinimize"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <ContextMenu x:Key="TabMenu" x:Shared="False">
+            <MenuItem Header="左へ移動" Click="MoveLeft_Click" />
+            <MenuItem Header="右へ移動" Click="MoveRight_Click" />
+            <Separator />
+            <MenuItem Header="プロジェクトの構成を編集…" Click="EditConfig_Click" />
+            <MenuItem Header="プロジェクトを開き直す" Click="ReopenProject_Click" />
+            <Separator />
+            <MenuItem Header="閉じる" Click="CloseProject_Click" />
+        </ContextMenu>
+
+        <Style x:Key="StripButtonStyle" TargetType="Button">
+            <Setter Property="Margin" Value="2,0,0,0" />
+            <Setter Property="Padding" Value="8,2" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Cursor" Value="Hand" />
+        </Style>
+
+        <!--
+            「＋」「≡」のボタンの記号。タブのアイコン（16×16）と同じ大きさにするため、字の枠いっぱいに描かれる
+            Windows のアイコン用フォントを使う（Windows 11 は Segoe Fluent Icons、10 は Segoe MDL2 Assets）。
+            フォントはボタンではなくこの文字だけに付ける（ボタンのメニューに引き継がれないように）
+        -->
+        <Style x:Key="StripIconStyle" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Segoe Fluent Icons, Segoe MDL2 Assets" />
+            <Setter Property="FontSize" Value="16" />
+        </Style>
+
+        <Style x:Key="TabItemStyle" TargetType="ListBoxItem">
+            <EventSetter Event="MouseLeftButtonUp" Handler="Tab_MouseLeftButtonUp" />
+            <EventSetter Event="PreviewMouseLeftButtonDown" Handler="Tab_PreviewMouseLeftButtonDown" />
+            <EventSetter Event="PreviewMouseMove" Handler="Tab_PreviewMouseMove" />
+            <EventSetter Event="Drop" Handler="Tab_Drop" />
+            <Setter Property="AllowDrop" Value="True" />
+            <Setter Property="ContextMenu" Value="{StaticResource TabMenu}" />
+            <Setter Property="Padding" Value="10,4,4,4" />
+            <Setter Property="Margin" Value="0,0,2,0" />
+            <Setter Property="BorderThickness" Value="1,1,1,0" />
+            <Setter Property="BorderBrush" Value="#C8C8C8" />
+            <Setter Property="Background" Value="#E8E8E8" />
+            <Setter Property="ToolTip" Value="{Binding Directory}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Padding="{TemplateBinding Padding}"
+                                CornerRadius="4,4,0,0">
+                            <ContentPresenter VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#F2F2F2" />
+                </Trigger>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="White" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <!-- タブのない所をドラッグすると、wtbun と全プロジェクトのウィンドウを一緒に動かす -->
+    <Grid Background="#DADADA" MouseLeftButtonDown="Strip_MouseLeftButtonDown">
+        <DockPanel LastChildFill="False" Margin="4,0,4,0">
+            <ListBox x:Name="ProjectTabs"
+                     DockPanel.Dock="Left"
+                     VerticalAlignment="Bottom"
+                     ItemsSource="{Binding Projects}"
+                     ItemContainerStyle="{StaticResource TabItemStyle}"
+                     SelectionChanged="ProjectTabs_SelectionChanged"
+                     Background="Transparent"
+                     BorderThickness="0"
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{Binding Icon}"
+                                   Width="16" Height="16"
+                                   Margin="0,0,6,0"
+                                   VerticalAlignment="Center"
+                                   RenderOptions.BitmapScalingMode="HighQuality" />
+                            <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
+                            <Button Content="×"
+                                    ToolTip="閉じる"
+                                    Margin="8,0,0,0"
+                                    Padding="4,0"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    Cursor="Hand"
+                                    Click="CloseProject_Click" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Button DockPanel.Dock="Left"
+                    ToolTip="プロジェクトを開く"
+                    AutomationProperties.Name="プロジェクトを開く"
+                    Style="{StaticResource StripButtonStyle}"
+                    Click="Menu_Click">
+                <!-- 追加（＋）のアイコン -->
+                <TextBlock Text="&#xE710;" Style="{StaticResource StripIconStyle}" />
+                <Button.ContextMenu>
+                    <ContextMenu Opened="OpenMenu_Opened">
+                        <MenuItem Header="フォルダーを選択…" Click="OpenProject_Click" />
+                        <MenuItem x:Name="HistoryMenu" Header="履歴" />
+                        <Separator />
+                        <MenuItem x:Name="ClearHistoryMenu" Header="履歴の消去…" Click="ClearHistory_Click" />
+                    </ContextMenu>
+                </Button.ContextMenu>
+            </Button>
+            <Button DockPanel.Dock="Right"
+                    ToolTip="メニュー"
+                    AutomationProperties.Name="メニュー"
+                    Style="{StaticResource StripButtonStyle}"
+                    Click="Menu_Click">
+                <!-- メニュー（≡）のアイコン -->
+                <TextBlock Text="&#xE700;" Style="{StaticResource StripIconStyle}" />
+                <Button.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem x:Name="ShowInTaskbarMenu"
+                                  Header="ターミナルをタスクバーに表示"
+                                  IsCheckable="True"
+                                  Click="ShowInTaskbar_Click" />
+                        <Separator />
+                        <MenuItem x:Name="AboutMenu" Click="About_Click" />
+                        <Separator />
+                        <MenuItem x:Name="ExitMenu" Click="Exit_Click" />
+                    </ContextMenu>
+                </Button.ContextMenu>
+            </Button>
+        </DockPanel>
+    </Grid>
+</Window>

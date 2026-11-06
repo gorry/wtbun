@@ -1,0 +1,12 @@
+# 改行は LF にそろえる（リポジトリの中も、取り出したファイルも）
+* text=auto eol=lf
+
+# dotnet や Visual Studio は保存するときに CRLF で書くので、取り出すときから CRLF にしておく（差分や警告が出ないように）
+*.slnx text eol=crlf
+
+# cmd.exe のバッチファイルは、LF だとラベルへのジャンプが誤動作することがある
+*.cmd text eol=crlf
+*.bat text eol=crlf
+
+*.png binary
+*.ico binary

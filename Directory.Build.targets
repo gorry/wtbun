@@ -1,0 +1,47 @@
+<Project>
+  <!-- Profile.ini に必要な値がなければ止める（値が取り出せないと、Profile.ini の中身全体が入って改行を含む） -->
+  <Target Name="CheckProfile" BeforeTargets="BeforeBuild;CoreCompile">
+    <Error Condition="$(ProfileTitle.Contains('&#10;'))" Text="Profile.ini に [Title] Text がありません" />
+    <Error Condition="$(ProfileShortTitle.Contains('&#10;'))" Text="Profile.ini に [Title] ShortText がありません" />
+    <Error Condition="$(ProfileVersion.Contains('&#10;'))" Text="Profile.ini に [Version] Text がありません" />
+    <Error Condition="$(ProfileVersionNumber.Contains('&#10;'))" Text="Profile.ini に [Version] Number がありません" />
+    <Error Condition="$(ProfileCopyright.Contains('&#10;'))" Text="Profile.ini に [Copyright] Text がありません" />
+  </Target>
+
+  <!--
+    コードから使う定数クラス AppProfile を、obj の下に作ってコンパイルに加える（git には入らない）。
+    WPF の一時プロジェクトのコンパイルでも使うので、CoreCompile の前に作る。
+    値は C# の生文字列リテラル（"""…"""）に入れるので、引用符などをエスケープしなくてよい。
+  -->
+  <Target Name="GenerateProfileSource" DependsOnTargets="CheckProfile" BeforeTargets="CoreCompile"
+          Condition="'$(MSBuildProjectExtension)' == '.csproj'">
+    <PropertyGroup>
+      <ProfileSourceFile>$(IntermediateOutputPath)Profile.g.cs</ProfileSourceFile>
+      <_OptionalProfileValue Condition="!$(ProfileAuthor.Contains('&#10;'))">$(ProfileAuthor.Trim())</_OptionalProfileValue>
+      <_OptionalProjectUrl Condition="!$(ProfileProjectUrl.Contains('&#10;'))">$(ProfileProjectUrl.Trim())</_OptionalProjectUrl>
+      <_OptionalNoticeUrl Condition="!$(ProfileNoticeUrl.Contains('&#10;'))">$(ProfileNoticeUrl.Trim())</_OptionalNoticeUrl>
+      <_ProfileSource>
+// Profile.ini から Directory.Build.targets が作るファイル。手で直さない
+namespace Wtbun%3B
+
+/// &lt;summary&gt;Profile.ini の定数（アプリ名・バージョン・著作権表示など）。&lt;/summary&gt;
+public static class AppProfile
+{
+    public const string Title = """$(ProfileTitle.Trim())"""%3B
+    public const string ShortTitle = """$(ProfileShortTitle.Trim())"""%3B
+    public const string Version = """$(ProfileVersion.Trim())"""%3B
+    public const long VersionNumber = $(ProfileVersionNumber.Trim())%3B
+    public const string Copyright = """$(ProfileCopyright.Trim())"""%3B
+    public const string Author = """$(_OptionalProfileValue)"""%3B
+    public const string ProjectUrl = """$(_OptionalProjectUrl)"""%3B
+    public const string NoticeUrl = """$(_OptionalNoticeUrl)"""%3B
+}
+</_ProfileSource>
+    </PropertyGroup>
+    <WriteLinesToFile File="$(ProfileSourceFile)" Lines="$(_ProfileSource)" Overwrite="true" WriteOnlyWhenDifferent="true" />
+    <ItemGroup>
+      <Compile Include="$(ProfileSourceFile)" />
+      <FileWrites Include="$(ProfileSourceFile)" />
+    </ItemGroup>
+  </Target>
+</Project>

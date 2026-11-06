@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <!-- exe のアイコン。リポジトリ直下の wtbun.icon.png から作ったもの（作り方は memo/doc/spec.md の「アイコン」）。ウィンドウとタスクバーのアイコンにもなる -->
+    <ApplicationIcon>app.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Tomlyn" Version="2.10.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- プロジェクトのアイコンがないときにタブに出す（ProjectIcon.Default） -->
+    <Resource Include="app.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- 「wtbun について」に出す（AboutWindow）。ネットにつながっていなくても読めるように、exe に入れる -->
+    <EmbeddedResource Include="..\..\NOTICE" LogicalName="NOTICE" />
+    <EmbeddedResource Include="..\..\LICENSE" LogicalName="LICENSE" />
+  </ItemGroup>
+
+  <!-- wtbunhook.dll（Windows Terminal の閉じる要求を止める）。C++ ツールがなければ警告だけ出して続ける。DLL がなくても wtbun は動く -->
+  <PropertyGroup>
+    <HookDir>$(MSBuildThisFileDirectory)..\WtbunHook\</HookDir>
+    <HookDll>$(HookDir)bin\wtbunhook.dll</HookDll>
+  </PropertyGroup>
+
+  <Target Name="BuildHook" BeforeTargets="BeforeBuild" Inputs="$(HookDir)wtbunhook.cpp;$(HookDir)build.cmd" Outputs="$(HookDll)">
+    <Exec Command="&quot;$(HookDir)build.cmd&quot;" ContinueOnError="WarnAndContinue" />
+  </Target>
+
+  <Target Name="CopyHook" AfterTargets="Build" Condition="Exists('$(HookDll)')">
+    <Copy SourceFiles="$(HookDll)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" />
+  </Target>
+
+</Project>

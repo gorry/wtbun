@@ -1,0 +1,27 @@
+<Project>
+  <!--
+    Profile.ini（アプリ名・バージョン・著作権表示などの定数。著作者だけが書き換える）を読んで、プロパティにする。
+    [節] のキーの値を、正規表現の置き換えで取り出す（見つからないときは元の文字列のままになるので、
+    Directory.Build.targets の CheckProfile で止める）。
+  -->
+  <PropertyGroup>
+    <ProfileIniPath>$(MSBuildThisFileDirectory)Profile.ini</ProfileIniPath>
+    <_ProfileIni>$([System.IO.File]::ReadAllText('$(ProfileIniPath)'))</_ProfileIni>
+
+    <ProfileTitle>$([System.Text.RegularExpressions.Regex]::Replace($(_ProfileIni), '(?sm)\A.*?^\[Title\]\r?%24(?:(?!^\[).)*?^Text=([^\r\n]*).*\z', '$1'))</ProfileTitle>
+    <ProfileShortTitle>$([System.Text.RegularExpressions.Regex]::Replace($(_ProfileIni), '(?sm)\A.*?^\[Title\]\r?%24(?:(?!^\[).)*?^ShortText=([^\r\n]*).*\z', '$1'))</ProfileShortTitle>
+    <ProfileVersion>$([System.Text.RegularExpressions.Regex]::Replace($(_ProfileIni), '(?sm)\A.*?^\[Version\]\r?%24(?:(?!^\[).)*?^Text=([^\r\n]*).*\z', '$1'))</ProfileVersion>
+    <ProfileVersionNumber>$([System.Text.RegularExpressions.Regex]::Replace($(_ProfileIni), '(?sm)\A.*?^\[Version\]\r?%24(?:(?!^\[).)*?^Number=([^\r\n]*).*\z', '$1'))</ProfileVersionNumber>
+    <ProfileCopyright>$([System.Text.RegularExpressions.Regex]::Replace($(_ProfileIni), '(?sm)\A.*?^\[Copyright\]\r?%24(?:(?!^\[).)*?^Text=([^\r\n]*).*\z', '$1'))</ProfileCopyright>
+    <ProfileAuthor>$([System.Text.RegularExpressions.Regex]::Replace($(_ProfileIni), '(?sm)\A.*?^\[Copyright\]\r?%24(?:(?!^\[).)*?^Name=([^\r\n]*).*\z', '$1'))</ProfileAuthor>
+    <ProfileProjectUrl>$([System.Text.RegularExpressions.Regex]::Replace($(_ProfileIni), '(?sm)\A.*?^\[URL\]\r?%24(?:(?!^\[).)*?^Project=([^\r\n]*).*\z', '$1'))</ProfileProjectUrl>
+    <ProfileNoticeUrl>$([System.Text.RegularExpressions.Regex]::Replace($(_ProfileIni), '(?sm)\A.*?^\[URL\]\r?%24(?:(?!^\[).)*?^Notice=([^\r\n]*).*\z', '$1'))</ProfileNoticeUrl>
+
+    <!-- 実行ファイルのバージョン情報 -->
+    <Version>$(ProfileVersion.Trim())</Version>
+    <Product>$(ProfileTitle.Trim())</Product>
+    <AssemblyTitle>$(ProfileTitle.Trim())</AssemblyTitle>
+    <Copyright>$(ProfileCopyright.Trim())</Copyright>
+    <Company Condition="!$(ProfileAuthor.Contains('&#10;'))">$(ProfileAuthor.Trim())</Company>
+  </PropertyGroup>
+</Project>
